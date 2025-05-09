@@ -1,4 +1,5 @@
 import 'package:endyear_2025_gr01_mobileapp/test.dart';
+import 'package:endyear_2025_gr01_mobileapp/view/screen/auth/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
 
-      home: const Test(),
+      home: const Login(),
     );
   }
 }
