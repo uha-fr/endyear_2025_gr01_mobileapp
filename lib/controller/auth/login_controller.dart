@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../../core/class/statusrequest.dart';
 import '../../data/datasource/remote/auth/login.dart';
 
 abstract class LoginController extends GetxController {
@@ -9,35 +10,42 @@ abstract class LoginController extends GetxController {
 
 }
 
-
-class LoginControllerImp extends LoginController{
-
+class LoginControllerImp extends LoginController {
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
+
   LoginData loginData = LoginData();
 
   late TextEditingController email;
-  late TextEditingController passowrd;
+  late TextEditingController password;
 
-  bool isPassord = true;
+  bool isShowPassword = true;
+
+
+  StatusRequest statusRequest = StatusRequest.none;
 
   @override
-  login() {
-    print("login focntionne");
+  login() async {
+      print("login fonctionne");
   }
+
+  showPassword() {
+    isShowPassword = isShowPassword == true ? false : true;
+    update();
+  }
+
+
 
   @override
   void onInit() {
-    email= TextEditingController();
-    passowrd = TextEditingController();
-
+    email = TextEditingController();
+    password = TextEditingController();
     super.onInit();
   }
 
   @override
   void dispose() {
     email.dispose();
-    passowrd.dispose();
+    password.dispose();
     super.dispose();
   }
-
 }
