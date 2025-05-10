@@ -21,11 +21,11 @@ class HomeScreenControllerImp extends HomeScreenController {
   ];
 
   List<Widget> listPage = [
-    const HomePage(),
-    const CommandesPage(),
-    const ProductsPage(),
-    const ClientsPage(),
-    const TasksPage(),
+    HomePage(),
+    CommandesPage(),
+    ProductsPage(),
+    ClientsPage(),
+    TasksPage(),
   ];
 
   @override
