@@ -3,6 +3,7 @@ class OrderModel {
   String? reference;
   int? idCart;
   int? idCustomer;
+  String? customerName;
   int? idCurrency;
   int? idAddressDelivery;
   int? idAddressInvoice;
@@ -28,6 +29,7 @@ class OrderModel {
     this.reference,
     this.idCart,
     this.idCustomer,
+    this.customerName,
     this.idCurrency,
     this.idAddressDelivery,
     this.idAddressInvoice,
@@ -55,6 +57,7 @@ class OrderModel {
       reference: json['reference'],
       idCart: json['idCart'],
       idCustomer: json['idCustomer'],
+      customerName: json['customerName'],
       idCurrency: json['idCurrency'],
       idAddressDelivery: json['idAddressDelivery'],
       idAddressInvoice: json['idAddressInvoice'],
@@ -83,6 +86,7 @@ class OrderModel {
       'reference': reference,
       'idCart': idCart,
       'idCustomer': idCustomer,
+      'customerName': customerName,
       'idCurrency': idCurrency,
       'idAddressDelivery': idAddressDelivery,
       'idAddressInvoice': idAddressInvoice,

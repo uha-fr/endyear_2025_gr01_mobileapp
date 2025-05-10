@@ -27,8 +27,8 @@ class CommandesPage extends StatelessWidget {
           itemBuilder: (context, index) {
             final order = orderController.orders[index];
             return CustomOrderCard(
-              orderId: order.id.toString(),
-              customerName: order.reference ?? 'No Name',
+              orderId: order.reference.toString(),
+              customerName: order.customerName ?? 'No Name',
               date: order.dateAdd?.toString() ?? 'N/A',
               amount: order.totalPaid ?? 0.0,
               status: _getStatusFromState(order.currentState),
