@@ -18,12 +18,16 @@ class ProductControllerImp extends ProductController {
   late ProductsData productsData =  ProductsData();
 
   List data = [];
+  List filteredData = [];
 
   late StatusRequest statusRequest;
 
   //MyServices myServices = Get.find();
 
   String deliveryTime="";
+
+  String? selectedCategoryId;
+  String stockFilter = "all"; // all, in_stock, out_of_stock
 
   @override
   void onInit() {
@@ -33,17 +37,37 @@ class ProductControllerImp extends ProductController {
 
   @override
   intialData() {
-    //categories = Get.arguments['categories'];
-    //selectedCat = Get.arguments['selectedcat'];
-    //catid = Get.arguments['catid'];
-    
     getproduct("1");
+  }
+
+  void updateCategoryFilter(String? categoryId) {
+    selectedCategoryId = categoryId;
+    applyFilters();
+  }
+
+  void updateStockFilter(String filter) {
+    stockFilter = filter;
+    applyFilters();
+  }
+
+  void applyFilters() {
+    filteredData = data.where((product) {
+      bool matchesCategory = selectedCategoryId == null || selectedCategoryId == "" || product.categoriesId == selectedCategoryId;
+      bool matchesStock = true;
+      int count = int.tryParse(product.productCount ?? '0') ?? 0;
+      if (stockFilter == "in_stock") {
+        matchesStock = count > 0;
+      } else if (stockFilter == "out_of_stock") {
+        matchesStock = count == 0;
+      }
+      return matchesCategory && matchesStock;
+    }).toList();
+    update();
   }
 
   @override
   changeCat(val, catval) {
-    selectedCat = val;
-    catid = catval;
+    selectedCategoryId = catval;
     getproduct(catid!);
     update();
   }
@@ -113,7 +137,7 @@ class ProductControllerImp extends ProductController {
       ),
     ];
     statusRequest = StatusRequest.success;
-    update();
+    applyFilters();
   }
 
   @override

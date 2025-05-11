@@ -34,19 +34,55 @@ class ProductsPage extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          // 2ém partie (ListProducts)
+          // 2ém partie (Filters + ListProducts)
           GetBuilder<ProductControllerImp>(
             builder: (controller) => HandlingDataView(
               statusRequest: controller.statusRequest,
-              widget: GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.data.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 0.7),
-                itemBuilder: (BuildContext context, index) {
-                  return CustomListproduct(productModel: controller.data[index]);
-                },
+              widget: Column(
+                children: [
+                  // Filters UI
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DropdownButton<String>(
+                        value: controller.selectedCategoryId ?? '',
+                        hint: Text('Selectioner la catégorie'),
+                        items: [
+                          DropdownMenuItem(value: '', child: Text('Tous les Categories')),
+                          DropdownMenuItem(value: 'cat1', child: Text('Category 1')),
+                          DropdownMenuItem(value: 'cat2', child: Text('Category 2')),
+                        ],
+                        onChanged: (value) {
+                          controller.updateCategoryFilter(value == '' ? null : value);
+                        },
+                      ),
+                      DropdownButton<String>(
+                        value: controller.stockFilter,
+                        items: [
+                          DropdownMenuItem(value: 'all', child: Text('Tous les produits')),
+                          DropdownMenuItem(value: 'in_stock', child: Text('En Stock')),
+                          DropdownMenuItem(value: 'out_of_stock', child: Text('Rupture de stock')),
+                        ],
+                        onChanged: (value) {
+                          if (value != null) {
+                            controller.updateStockFilter(value);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  // Afficher les produits
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.filteredData.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, childAspectRatio: 0.7),
+                    itemBuilder: (BuildContext context, index) {
+                      return CustomListproduct(productModel: controller.filteredData[index]);
+                    },
+                  ),
+                ],
               ),
             ),
           )
