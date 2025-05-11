@@ -18,7 +18,19 @@ class ProductsPage extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: ListView(children: [
 
-          
+          //1ér partie customAppBar ( recherche et button notif )
+          CustomAppBar(
+            mycontroller: TextEditingController(),
+            onChanged: (val) {
+
+            },
+            title: "Nom du produit",
+            onPressedIcon: () {},
+            onPressedSearch: () {
+
+            },
+
+          ),
 
           const SizedBox(height: 20),
 
