@@ -19,33 +19,93 @@ class CommandesPage extends StatelessWidget {
         backgroundColor: AppColor.primaryColor,
         foregroundColor: Colors.white,
       ),
-      body: Obx(() {
-        if (orderController.orders.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return ListView.builder(
-          itemCount: orderController.orders.length,
-          itemBuilder: (context, index) {
-            final order = orderController.orders[index];
-            return GestureDetector(
-              onTap: () {
-                final OrdersDetailsController detailsController = Get.put(
-                  OrdersDetailsController(),
-                );
-                detailsController.setOrder(order);
-                Get.toNamed('/commandsdetails');
-              },
-              child: CustomOrderCard(
-                orderId: order.reference.toString(),
-                customerName: order.customerName ?? 'No Name',
-                date: order.dateAdd?.toString() ?? 'N/A',
-                amount: order.totalPaid ?? 0.0,
-                status: _getStatusFromState(order.currentState),
-              ),
-            );
-          },
-        );
-      }),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Filtrer par état
+                Obx(
+                  () => DropdownButton<int>(
+                    isDense: true,
+                    value: orderController.selectedState.value,
+                    items: [
+                      const DropdownMenuItem(value: 0, child: Text('All')),
+                      const DropdownMenuItem(
+                        value: 1,
+                        child: Text('Processing'),
+                      ),
+                      const DropdownMenuItem(value: 2, child: Text('Shipped')),
+                      const DropdownMenuItem(value: 3, child: Text('Pending')),
+                      const DropdownMenuItem(
+                        value: 4,
+                        child: Text('Delivered'),
+                      ),
+                      const DropdownMenuItem(value: 5, child: Text('Canceled')),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) {
+                        orderController.updateFilterState(value);
+                      }
+                    },
+                  ),
+                ),
+                // Trier par date
+                Obx(
+                  () => DropdownButton<bool>(
+                    isDense: true,
+                    value: orderController.sortAscending.value,
+                    items: const [
+                      DropdownMenuItem(value: true, child: Text('Date Asc')),
+                      DropdownMenuItem(value: false, child: Text('Date Desc')),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) {
+                        orderController.updateSortOrder(value);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Obx(() {
+              if (orderController.orders.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              final filteredOrders = orderController.filteredSortedOrders;
+              if (filteredOrders.isEmpty) {
+                return const Center(child: Text('No orders found.'));
+              }
+              return ListView.builder(
+                itemCount: filteredOrders.length,
+                itemBuilder: (context, index) {
+                  final order = filteredOrders[index];
+                  return GestureDetector(
+                    onTap: () {
+                      final OrdersDetailsController detailsController = Get.put(
+                        OrdersDetailsController(),
+                      );
+                      detailsController.setOrder(order);
+                      Get.toNamed('/commandsdetails');
+                    },
+                    child: CustomOrderCard(
+                      orderId: order.reference.toString(),
+                      customerName: order.customerName ?? 'No Name',
+                      date: order.dateAdd?.toString() ?? 'N/A',
+                      amount: order.totalPaid ?? 0.0,
+                      status: _getStatusFromState(order.currentState),
+                    ),
+                  );
+                },
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 
