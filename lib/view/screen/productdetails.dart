@@ -5,6 +5,8 @@ import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widget/customAppBar.dart';
+
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
 
@@ -13,6 +15,7 @@ class ProductDetails extends StatelessWidget {
     ProductDetailsControllerImp controller =
         Get.put(ProductDetailsControllerImp());
     return Scaffold(
+        appBar: CustomAppBar(title: "détails de produit"),
         body: GetBuilder<ProductDetailsControllerImp>(
             builder: (controller) => HandlingDataView(
                   statusRequest: controller.statusRequest,

@@ -1,6 +1,6 @@
 import 'package:endyear_2025_gr01_mobileapp/controller/products_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/handlingdataview.dart';
-import 'package:endyear_2025_gr01_mobileapp/view/widget/customappbar.dart';
+import 'package:endyear_2025_gr01_mobileapp/view/widget/customappbarSearch.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/products/customlistproducts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class ProductsPage extends StatelessWidget {
         child: ListView(children: [
 
           //1ér partie customAppBar ( recherche et button notif )
-          CustomAppBar(
+          CustomAppBarSearsh(
             mycontroller: TextEditingController(),
             onChanged: (val) {
 
