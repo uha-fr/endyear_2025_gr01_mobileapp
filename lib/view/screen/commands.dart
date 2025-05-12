@@ -1,4 +1,5 @@
 import 'package:endyear_2025_gr01_mobileapp/controller/orders_controller.dart';
+import 'package:endyear_2025_gr01_mobileapp/controller/ordersdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/orders/customordercard.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,21 @@ class CommandesPage extends StatelessWidget {
           itemCount: orderController.orders.length,
           itemBuilder: (context, index) {
             final order = orderController.orders[index];
-            return CustomOrderCard(
-              orderId: order.reference.toString(),
-              customerName: order.customerName ?? 'No Name',
-              date: order.dateAdd?.toString() ?? 'N/A',
-              amount: order.totalPaid ?? 0.0,
-              status: _getStatusFromState(order.currentState),
+            return GestureDetector(
+              onTap: () {
+                final OrdersDetailsController detailsController = Get.put(
+                  OrdersDetailsController(),
+                );
+                detailsController.setOrder(order);
+                Get.toNamed('/commandsdetails');
+              },
+              child: CustomOrderCard(
+                orderId: order.reference.toString(),
+                customerName: order.customerName ?? 'No Name',
+                date: order.dateAdd?.toString() ?? 'N/A',
+                amount: order.totalPaid ?? 0.0,
+                status: _getStatusFromState(order.currentState),
+              ),
             );
           },
         );
