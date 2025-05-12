@@ -1,6 +1,6 @@
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/model/productmodel/productmodel.dart';
-import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/products_controller.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/productsData.dart';
 import 'package:get/get.dart';
  
 abstract class ProductController extends GetxController {
