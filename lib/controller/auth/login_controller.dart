@@ -1,5 +1,7 @@
 
+import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../../core/class/statusrequest.dart';
@@ -26,6 +28,9 @@ class LoginControllerImp extends LoginController {
   @override
   login() async {
       print("login fonctionne");
+      Get.offNamed(
+              AppRoutes.homePage,
+            );
   }
 
   showPassword() {
