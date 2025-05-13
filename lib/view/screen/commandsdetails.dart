@@ -53,10 +53,7 @@ class CommandsDetailsPage extends StatelessWidget {
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Customer Name: ${order.customerName ?? 'No Name'}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
+
                   const SizedBox(height: 8),
                   Text(
                     'Date Added: ${order.dateAdd?.toString() ?? 'N/A'}',
@@ -73,22 +70,10 @@ class CommandsDetailsPage extends StatelessWidget {
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Total Paid: \$${order.totalPaid?.toStringAsFixed(2) ?? '0.00'}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
+
                   const SizedBox(height: 8),
-                  Text(
-                    'Gift: ${order.gift == true ? 'Yes' : 'No'}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  if (order.gift == true) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      'Gift Message: ${order.giftMessage ?? ''}',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ],
+
+
                 ],
               ),
             ),
