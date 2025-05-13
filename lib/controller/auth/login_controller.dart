@@ -1,4 +1,3 @@
-
 import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import '../../data/datasource/remote/auth/login.dart';
 
 abstract class LoginController extends GetxController {
   login();
-
 }
 
 class LoginControllerImp extends LoginController {
@@ -22,23 +20,18 @@ class LoginControllerImp extends LoginController {
 
   bool isShowPassword = true;
 
-
   StatusRequest statusRequest = StatusRequest.none;
 
   @override
   login() async {
-      print("login fonctionne");
-      Get.offNamed(
-              AppRoutes.homePage,
-            );
+    print("login fonctionne");
+    Get.offNamed(AppRoutes.homeScreen);
   }
 
   showPassword() {
     isShowPassword = isShowPassword == true ? false : true;
     update();
   }
-
-
 
   @override
   void onInit() {
