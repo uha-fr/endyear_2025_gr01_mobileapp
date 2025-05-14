@@ -20,7 +20,7 @@ class CustomListOrder extends GetView<TasksControllerImp> {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         onTap: () {
-          controller.goToPageOrderDetails(order.id ?? 0);
+          controller.goToPageOrderDetails(order);
         },
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/ordersdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
@@ -8,7 +9,7 @@ abstract class TasksController extends GetxController {
   getOrdersToProcess();
   getOrdersToShip();
   getRestockProducts();
-  goToPageOrderDetails(int orderId);
+  goToPageOrderDetails(OrderModel order);
   gotToPageProductDetails(ProductModel productModel);
 }
 
@@ -104,8 +105,10 @@ class TasksControllerImp extends TasksController {
   }
 
   @override
-  goToPageOrderDetails(int orderId) {
-    // Implement navigation to order details page
+  goToPageOrderDetails(OrderModel order) {
+     final OrdersDetailsController detailsController = Get.put(OrdersDetailsController());
+    detailsController.setOrder(order);
+    Get.toNamed('/commandsdetails');
   }
 
    @override
