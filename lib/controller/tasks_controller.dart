@@ -1,6 +1,6 @@
-import 'package:endyear_2025_gr01_mobileapp/controller/ordersdetails_controller.dart';
+import 'package:endyear_2025_gr01_mobileapp/controller/orderdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
-import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order_model.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +56,8 @@ class TasksControllerImp extends TasksController {
         totalProducts: 1,
       ),
     ];
-    ordersToProcess = orders.where((order) => order.payment == "accepted").toList();
+    ordersToProcess =
+        orders.where((order) => order.payment == "accepted").toList();
     update();
   }
 
@@ -97,21 +98,24 @@ class TasksControllerImp extends TasksController {
         productCount: "0",
       ),
     ];
-    restockProducts = products.where((product) {
-      int count = int.tryParse(product.productCount ?? "0") ?? 0;
-      return count < 10;
-    }).toList();
+    restockProducts =
+        products.where((product) {
+          int count = int.tryParse(product.productCount ?? "0") ?? 0;
+          return count < 10;
+        }).toList();
     update();
   }
 
   @override
   goToPageOrderDetails(OrderModel order) {
-     final OrdersDetailsController detailsController = Get.put(OrdersDetailsController());
+    final OrdersDetailsController detailsController = Get.put(
+      OrdersDetailsController(),
+    );
     detailsController.setOrder(order);
     Get.toNamed('/commandsdetails');
   }
 
-   @override
+  @override
   gotToPageProductDetails(productModel) {
     Get.toNamed("productdetails", arguments: {"productModel": productModel});
   }
