@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,7 +18,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               Navigator.pop(context);
             },
           ),
-          title: Text(title)
+          title: Text(title),
+          backgroundColor: AppColor.primaryColor,
+          foregroundColor: Colors.white,
     );
       
   }
