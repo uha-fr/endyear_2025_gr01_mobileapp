@@ -1,6 +1,6 @@
-import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order_model.dart';
 import 'package:get/get.dart';
-import 'package:endyear_2025_gr01_mobileapp/data/datasource/static/orders.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/static/orders_data.dart';
 
 class OrderController extends GetxController {
   var orders = <OrderModel>[].obs;

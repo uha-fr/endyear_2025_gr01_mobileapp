@@ -1,5 +1,6 @@
 import 'package:endyear_2025_gr01_mobileapp/controller/orders_controller.dart';
-import 'package:endyear_2025_gr01_mobileapp/controller/ordersdetails_controller.dart';
+import 'package:endyear_2025_gr01_mobileapp/controller/orderdetails_controller.dart';
+import 'package:endyear_2025_gr01_mobileapp/controller/clients_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/orders/customordercard.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 
 class CommandesPage extends StatelessWidget {
   final OrderController orderController = Get.put(OrderController());
+  final ClientsController clientsController = Get.put(ClientsController());
 
   CommandesPage({super.key});
 
@@ -84,6 +86,13 @@ class CommandesPage extends StatelessWidget {
                 itemCount: filteredOrders.length,
                 itemBuilder: (context, index) {
                   final order = filteredOrders[index];
+                  final client = clientsController.clientsList.firstWhereOrNull(
+                    (c) => c.id == order.idCustomer,
+                  );
+                  final clientName =
+                      client != null
+                          ? '${client.firstname} ${client.lastname}'
+                          : 'No Name';
                   return GestureDetector(
                     onTap: () {
                       final OrdersDetailsController detailsController = Get.put(
@@ -94,7 +103,7 @@ class CommandesPage extends StatelessWidget {
                     },
                     child: CustomOrderCard(
                       orderId: order.reference.toString(),
-                      customerName: order.customerName ?? 'No Name',
+                      customerName: clientName,
                       date: order.dateAdd?.toString() ?? 'N/A',
                       amount: order.totalPaid ?? 0.0,
                       status: _getStatusFromState(order.currentState),
