@@ -1,5 +1,5 @@
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
-import 'package:endyear_2025_gr01_mobileapp/data/datasource/model/productmodel/productmodel.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/productsData.dart';
 import 'package:get/get.dart';
  
