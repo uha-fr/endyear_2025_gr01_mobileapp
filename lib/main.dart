@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:endyear_2025_gr01_mobileapp/routes.dart';
 
 void main() {
-   testPrestaShopConnection();
+  fetchFromPythonApi();
   runApp(const MyApp());
 }
 
