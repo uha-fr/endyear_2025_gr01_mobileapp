@@ -1,12 +1,13 @@
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/productsData.dart';
+import 'package:endyear_2025_gr01_mobileapp/core/class/crud.dart';
 import 'package:get/get.dart';
  
 abstract class ProductController extends GetxController {
   intialData();
   changeCat(int val, String catval); // changer l categorie l dkhalnelha
-  getproduct(String categoryid);
+  getproduct();
   gotToPageProductDetails(ProductModel productModel);
 }
 
@@ -15,7 +16,8 @@ class ProductControllerImp extends ProductController {
   String? catid;
   int? selectedCat;
 
-  late ProductsData productsData =  ProductsData();
+  late Crud crud = Crud();
+  late ProductsData productsData = ProductsData(crud);
 
   List data = [];
   List filteredData = [];
@@ -24,7 +26,7 @@ class ProductControllerImp extends ProductController {
 
   //MyServices myServices = Get.find();
 
-  String deliveryTime="";
+  String deliveryTime = "";
 
   String? selectedCategoryId;
   String stockFilter = "all"; // all, in_stock, out_of_stock
@@ -37,7 +39,7 @@ class ProductControllerImp extends ProductController {
 
   @override
   intialData() {
-    getproduct("1");
+    getproduct();
   }
 
   void updateCategoryFilter(String? categoryId) {
@@ -68,75 +70,22 @@ class ProductControllerImp extends ProductController {
   @override
   changeCat(val, catval) {
     selectedCategoryId = catval;
-    getproduct(catid!);
+    getproduct();
     update();
   }
 
   @override
-  getproduct(categoryid) async {
-    data = [
-      ProductModel(
-        productId: "1",
-        productName: "Product 1",
-        productDesc: "Description for product 1",
-        productImage: "product1.png",
-        productCount: "10",
-        productActive: "1",
-        productPrice: "100",
-        productDate: "2023-01-01",
-        productCat: "cat1",
-        categoriesId: "cat1",
-        categoriesName: "Category 1",
-        categoriesImage: "cat1.png",
-        categoriesDatetime: "2023-01-01",
-      ),
-      ProductModel(
-        productId: "2",
-        productName: "Product 2",
-        productDesc: "Description for product 2",
-        productImage: "product2.png",
-        productCount: "0",
-        productActive: "1",
-        productPrice: "200",
-        productDate: "2023-01-02",
-        productCat: "cat2",
-        categoriesId: "cat2",
-        categoriesName: "Category 2",
-        categoriesImage: "cat2.png",
-        categoriesDatetime: "2023-01-02",
-      ),
-       ProductModel(
-        productId: "3",
-        productName: "Product 3",
-        productDesc: "Description for product 3",
-        productImage: "product3.png",
-        productCount: "5",
-        productActive: "1",
-        productPrice: "300",
-        productDate: "2023-01-03",
-        productCat: "cat2",
-        categoriesId: "cat2",
-        categoriesName: "Category 2",
-        categoriesImage: "cat2.png",
-        categoriesDatetime: "2023-01-02",
-      ),
-       ProductModel(
-        productId: "4",
-        productName: "Product 4",
-        productDesc: "Description for product 4",
-        productImage: "product4.png",
-        productCount: "5",
-        productActive: "1",
-        productPrice: "200",
-        productDate: "2023-01-02",
-        productCat: "cat2",
-        categoriesId: "cat2",
-        categoriesName: "Category 2",
-        categoriesImage: "cat2.png",
-        categoriesDatetime: "2023-01-02",
-      ),
-    ];
-    statusRequest = StatusRequest.success;
+  getproduct() async {
+    statusRequest = StatusRequest.loading;
+    update();
+    var response = await productsData.getData();
+    print('Fetched product data: $response'); // Added print for debugging
+    if (response.isNotEmpty) {
+      data = response.map((e) => ProductModel.fromJson(e)).toList();
+      statusRequest = StatusRequest.success;
+    } else {
+      statusRequest = StatusRequest.failure;
+    }
     applyFilters();
   }
 
