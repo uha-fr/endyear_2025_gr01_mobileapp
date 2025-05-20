@@ -8,7 +8,7 @@ class ProductsData {
   ProductsData(this.crud);
 
   Future<List> getData() async {
-    var response = await crud.getData(LinkApi.orders);
+    var response = await crud.getData(LinkApi.products);
     print("res --- $response");
     return response.fold((l) => [], (r) {
       if (r['success'] == true) {
@@ -16,7 +16,7 @@ class ProductsData {
         // The 'response' field is a JSON string, parse it
         var nestedResponse = jsonDecode(r['response']);
         // Extract the 'orders' list or adjust as per actual data structure
-        return nestedResponse['orders'] ?? [];
+        return nestedResponse['products'] ?? [];
       } else {
         return [];
       }
