@@ -28,7 +28,7 @@ class ProductControllerImp extends ProductController {
 
   String deliveryTime = "";
 
-  String? selectedCategoryId;
+  int? selectedCategoryId;
   String stockFilter = "all"; // all, in_stock, out_of_stock
 
   @override
@@ -42,7 +42,7 @@ class ProductControllerImp extends ProductController {
     getproduct();
   }
 
-  void updateCategoryFilter(String? categoryId) {
+  void updateCategoryFilter(int? categoryId) {
     selectedCategoryId = categoryId;
     applyFilters();
   }
@@ -54,9 +54,9 @@ class ProductControllerImp extends ProductController {
 
   void applyFilters() {
     filteredData = data.where((product) {
-      bool matchesCategory = selectedCategoryId == null || selectedCategoryId == "" || product.categoriesId == selectedCategoryId;
+      bool matchesCategory = selectedCategoryId == null || product.categoriesId == selectedCategoryId;
       bool matchesStock = true;
-      int count = int.tryParse(product.productCount ?? '0') ?? 0;
+      int count = product.productCount ?? 0;
       if (stockFilter == "in_stock") {
         matchesStock = count > 0;
       } else if (stockFilter == "out_of_stock") {
@@ -68,8 +68,8 @@ class ProductControllerImp extends ProductController {
   }
 
   @override
-  changeCat(val, catval) {
-    selectedCategoryId = catval;
+  changeCat(int val, String catval) {
+    selectedCategoryId = val;
     getproduct();
     update();
   }

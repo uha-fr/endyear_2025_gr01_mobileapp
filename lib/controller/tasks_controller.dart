@@ -82,25 +82,11 @@ class TasksControllerImp extends TasksController {
   getRestockProducts() {
     // Mock products with productCount < 10
     products = [
-      ProductModel(
-        productId: "p1",
-        productName: "Premium T-Shirt",
-        productCount: "2",
-      ),
-      ProductModel(
-        productId: "p2",
-        productName: "Denim Jeans",
-        productCount: "3",
-      ),
-      ProductModel(
-        productId: "p3",
-        productName: "Leather Bag",
-        productCount: "0",
-      ),
+     
     ];
     restockProducts =
         products.where((product) {
-          int count = int.tryParse(product.productCount ?? "0") ?? 0;
+         int count =  0;
           return count < 10;
         }).toList();
     update();

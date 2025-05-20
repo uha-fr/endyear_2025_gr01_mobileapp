@@ -32,13 +32,13 @@ class CustomListproduct extends GetView<ProductControllerImp> {
                         tag: "${productModel.productId}",
                         child: CachedNetworkImage(
                           imageUrl:
-                          "${LinkApi.imagesProducts}/${productModel.productImage!}",
+                          "${productModel.productImage ?? ''}",
                           height: 100,
                           fit: BoxFit.fill,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(productModel.productName!,
+                      Text(productModel.productName ?? '',
                           style: TextStyle(
                               color: AppColor.black,
                               fontSize: 16,
@@ -70,7 +70,7 @@ class CustomListproduct extends GetView<ProductControllerImp> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // prix du produit 
-                          Text("${productModel.productPrice} \$",
+                          Text("${productModel.productPrice ?? 0} \$",
                               style: const TextStyle(
                                   color: AppColor.primaryColor,
                                   fontSize: 16,
@@ -82,13 +82,13 @@ class CustomListproduct extends GetView<ProductControllerImp> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         decoration: BoxDecoration(
-                          color: (int.tryParse(productModel.productCount ?? '0') ?? 0) > 0
+                          color: (productModel.productCount ?? 0) > 0
                               ? Colors.green
                               : Colors.red,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          (int.tryParse(productModel.productCount ?? '0') ?? 0) > 0
+                          (productModel.productCount ?? 0) > 0
                               ? "En Stock ${productModel.productCount}"
                               : "Rupture de stock 0",
                           style: TextStyle(

@@ -11,7 +11,7 @@ class Crud {
   Future<Either<StatusRequest, Map>> getData(String url) async {
     try {
       print("qbl internet");
-      print("internet kayna mais qbl response");
+      print("internet kayna mais qbl   response");
       var response = await http.get(Uri.parse(url));
       print("internet kayna w mn b3d response");
       if (response.statusCode == 200) {

@@ -89,6 +89,53 @@ class ProductDetails extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 Text("Category Date: ${controller.productModel.categoriesDatetime ?? 'N/A'}"),
                                 const SizedBox(height: 10),
+                                // Additional fields from new model
+                                Text("Reference: ${controller.productModel.reference ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Condition: ${controller.productModel.condition ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Manufacturer: ${controller.productModel.manufacturer ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Weight: ${controller.productModel.weight ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Available Now: ${controller.productModel.availableNow ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Available Later: ${controller.productModel.availableLater ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Short Description: ${controller.productModel.descriptionShort ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Additional Shipping Cost: ${controller.productModel.additionalShippingCost ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Wholesale Price: ${controller.productModel.wholesalePrice ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                Text("Unity: ${controller.productModel.unity ?? 'N/A'}"),
+                                const SizedBox(height: 5),
+                                if (controller.productModel.allImages != null && controller.productModel.allImages!.isNotEmpty)
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      Text("All Images:"),
+                                      SizedBox(
+                                        height: 100,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: controller.productModel.allImages!.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Image.network(
+                                                controller.productModel.allImages![index],
+                                                height: 100,
+                                                width: 100,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                               ]),
                         ),
                       )

@@ -13,10 +13,8 @@ class ProductsData {
     return response.fold((l) => [], (r) {
       if (r['success'] == true) {
         print("recup marche");
-        // The 'response' field is a JSON string, parse it
-        var nestedResponse = jsonDecode(r['response']);
-        // Extract the 'orders' list or adjust as per actual data structure
-        return nestedResponse['products'] ?? [];
+        // Directly extract 'products' list from the decoded response map
+        return r['products'] ?? [];
       } else {
         return [];
       }
