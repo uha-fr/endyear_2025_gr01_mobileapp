@@ -1,16 +1,36 @@
-# endyear_2025_gr01_mobileapp
+# GestionMagasin
 
-A new Flutter project.
+GestionMagasin est une application Flutter de gestion de magasin.
 
-## Getting Started
+## Fonctionnalités
 
-This project is a starting point for a Flutter application.
+- Gestion des clients
+- Gestion des commandes
+- Gestion des produits
+- Gestion des tâches
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies et dépendances
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Cette application utilise les technologies et dépendances suivantes :
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter SDK
+- GetX pour la gestion de l'état et la navigation
+- HTTP pour les requêtes réseau
+- Shared Preferences pour le stockage local
+- Path pour la gestion des chemins de fichiers
+- Lottie pour les animations
+- Cached Network Image pour la gestion des images en cache
+- Dartz pour la programmation fonctionnelle
+- XML pour le traitement XML
+
+## Installation et configuration
+
+1. Assurez-vous d'avoir installé le [Flutter SDK](https://flutter.dev/docs/get-started/install).
+2. Clonez ce dépôt.
+3. Dans le répertoire du projet, exécutez la commande suivante pour installer les dépendances :
+    flutter pub get
+
+## Lancer l'application 
+
+exécutez la commande :
+    flutter run
