@@ -92,6 +92,34 @@ class OrderModel {
       orderRows: parseOrderRows(element),
     );
   }
+
+  factory OrderModel.fromJson(Map<String, dynamic> json) {
+    List<OrderRow> parseOrderRows(List<dynamic>? rowsJson) {
+      if (rowsJson == null) return [];
+      return rowsJson.map((rowJson) => OrderRow.fromJson(rowJson)).toList();
+    }
+
+    return OrderModel(
+      id: json['id'] ?? 0,
+      idAddressDelivery: json['id_address_delivery'] ?? 0,
+      idAddressInvoice: json['id_address_invoice'] ?? 0,
+      idCart: json['id_cart'] ?? 0,
+      idCurrency: json['id_currency'] ?? 0,
+      idLang: json['id_lang'] ?? 0,
+      idCustomer: json['id_customer'] ?? 0,
+      idCarrier: json['id_carrier'] ?? 0,
+      currentState: json['current_state'] ?? 0,
+      module: json['module'] ?? '',
+      payment: json['payment'] ?? '',
+      dateAdd: json['date_add'] ?? '',
+      reference: json['reference'] ?? '',
+      totalPaid: (json['total_paid'] as num?)?.toDouble(),
+      totalPaidTaxIncl: (json['total_paid_tax_incl'] as num?)?.toDouble(),
+      totalPaidTaxExcl: (json['total_paid_tax_excl'] as num?)?.toDouble(),
+      customerName: json['customerName'],
+      orderRows: parseOrderRows(json['associations']?['order_rows']),
+    );
+  }
 }
 
 class OrderRow {
@@ -128,6 +156,18 @@ class OrderRow {
       productName: element.getElement('product_name')?.text ?? '',
       productReference: element.getElement('product_reference')?.text ?? '',
       productPrice: parseDouble(element.getElement('product_price')?.text),
+    );
+  }
+
+  factory OrderRow.fromJson(Map<String, dynamic> json) {
+    return OrderRow(
+      id: json['id'] ?? 0,
+      productId: json['product_id'] ?? 0,
+      productAttributeId: json['product_attribute_id'] ?? 0,
+      productQuantity: json['product_quantity'] ?? 0,
+      productName: json['product_name'] ?? '',
+      productReference: json['product_reference'] ?? '',
+      productPrice: (json['product_price'] as num?)?.toDouble() ?? 0.0,
     );
   }
 }
