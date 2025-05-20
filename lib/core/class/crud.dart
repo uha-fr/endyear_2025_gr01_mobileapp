@@ -4,29 +4,27 @@ import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 
-import '../functions/checkinternet.dart';
-
 class Crud {
-
   Future<Either<StatusRequest, Map>> getData(String url) async {
+    print('Crud: getData called with url: $url');
     try {
-      print("qbl internet");
-      print("internet kayna mais qbl response");
       var response = await http.get(Uri.parse(url));
-      print("internet kayna w mn b3d response");
+      print('Crud: HTTP response status: ${response.statusCode}');
       if (response.statusCode == 200) {
         Map data = jsonDecode(response.body);
-        print("res2 -- $data");
+        print('Crud: response body decoded: $data');
         if (data['success'] == true) {
-          print("khdaaaaaaaam");
           return Right(data);
         } else {
+          print('Crud: response success field false');
           return const Left(StatusRequest.failure);
         }
       } else {
+        print('Crud: HTTP response status not 200');
         return const Left(StatusRequest.serverfailure);
       }
-    } catch (_) {
+    } catch (e) {
+      print('Crud: exception caught: $e');
       return const Left(StatusRequest.serverException);
     }
   }

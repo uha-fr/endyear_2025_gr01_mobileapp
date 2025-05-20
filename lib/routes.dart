@@ -19,7 +19,7 @@ List<GetPage<dynamic>>? routes = [
   //Product
   GetPage(name: AppRoutes.productdetails, page: () => const ProductDetails()),
 
-  GetPage(name: '/commandsdetails', page: () => const CommandsDetailsPage()),
+  GetPage(name: '/orderdetails', page: () => OrderDetailsScreen()),
 
   // Clients
   GetPage(name: '/clients', page: () => ClientsPage()),

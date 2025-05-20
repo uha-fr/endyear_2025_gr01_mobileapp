@@ -25,7 +25,7 @@ class HomeScreenControllerImp extends HomeScreenController {
     CommandesPage(),
     ProductsPage(),
     ClientsPage(),
-    TasksPage(),
+    //TasksPage(),
   ];
 
   @override

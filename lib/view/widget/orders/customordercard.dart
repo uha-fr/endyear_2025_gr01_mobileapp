@@ -18,14 +18,32 @@ class CustomOrderCard extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'pending':
+      case 'en attente du paiement par chèque':
         return Colors.orange.shade100;
-      case 'shipped':
+      case 'paiement accepté':
         return Colors.green.shade100;
-      case 'delivered':
-        return Colors.green.shade200;
-      case 'processing':
+      case 'en cours de préparation':
         return Colors.blue.shade100;
+      case 'expédié':
+        return Colors.lightBlue.shade100;
+      case 'livré':
+        return Colors.green.shade200;
+      case 'annulé':
+        return Colors.red.shade100;
+      case 'remboursé':
+        return Colors.purple.shade100;
+      case 'erreur de paiement':
+        return Colors.red.shade300;
+      case 'en attente de réapprovisionnement (payé)':
+        return Colors.yellow.shade100;
+      case 'en attente de virement bancaire':
+        return Colors.orange.shade200;
+      case 'paiement à distance accepté':
+        return Colors.green.shade300;
+      case 'en attente de réapprovisionnement (non payé)':
+        return Colors.yellow.shade200;
+      case 'en attente de paiement à la livraison':
+        return Colors.orange.shade300;
       default:
         return Colors.grey.shade200;
     }
@@ -33,14 +51,32 @@ class CustomOrderCard extends StatelessWidget {
 
   Color _getTextColor(String status) {
     switch (status.toLowerCase()) {
-      case 'pending':
+      case 'en attente du paiement par chèque':
         return Colors.orange;
-      case 'shipped':
+      case 'paiement accepté':
         return Colors.green;
-      case 'delivered':
-        return Colors.green;
-      case 'processing':
+      case 'en cours de préparation':
         return Colors.blue;
+      case 'expédié':
+        return Colors.lightBlue;
+      case 'livré':
+        return Colors.green.shade700;
+      case 'annulé':
+        return Colors.red;
+      case 'remboursé':
+        return Colors.purple;
+      case 'erreur de paiement':
+        return Colors.red.shade700;
+      case 'en attente de réapprovisionnement (payé)':
+        return Colors.yellow.shade800;
+      case 'en attente de virement bancaire':
+        return Colors.orange.shade800;
+      case 'paiement à distance accepté':
+        return Colors.green.shade800;
+      case 'en attente de réapprovisionnement (non payé)':
+        return Colors.yellow.shade900;
+      case 'en attente de paiement à la livraison':
+        return Colors.orange.shade900;
       default:
         return Colors.black;
     }
