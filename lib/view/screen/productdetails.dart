@@ -4,11 +4,22 @@ import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'dart:convert';
+import 'package:flutter_html/flutter_html.dart';
 import '../widget/customAppBar.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
+
+  
+  bool isBase64(String str) {
+    try {
+      final decoded = base64Decode(str);
+      return decoded.isNotEmpty;
+    } catch (e) {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +47,17 @@ class ProductDetails extends StatelessWidget {
                                   Center(
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Image.network(
-                                        controller.productModel.productImage!,
-                                        height: 200,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: isBase64(controller.productModel.productImage!)
+                                          ? Image.memory(
+                                              base64Decode(controller.productModel.productImage!),
+                                              height: 200,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.network(
+                                              controller.productModel.productImage!,
+                                              height: 200,
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                   ),
                                 const SizedBox(height: 20),
@@ -54,10 +71,10 @@ class ProductDetails extends StatelessWidget {
                                       ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text(
-                                  "${controller.productModel.productDesc}",
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
+                                if (controller.productModel.productDesc != null && controller.productModel.productDesc!.isNotEmpty)
+                                  Html(
+                                    data: controller.productModel.productDesc!,
+                                  ),
                                 const SizedBox(height: 20),
                                 Text("Product ID: ${controller.productModel.productId ?? 'N/A'}"),
                                 const SizedBox(height: 5),
@@ -102,40 +119,19 @@ class ProductDetails extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 Text("Available Later: ${controller.productModel.availableLater ?? 'N/A'}"),
                                 const SizedBox(height: 5),
-                                Text("Short Description: ${controller.productModel.descriptionShort ?? 'N/A'}"),
-                                const SizedBox(height: 5),
+Text("Short Description:"),
+Html(
+  data: controller.productModel.descriptionShort ?? '',
+),
+const SizedBox(height: 5),
                                 Text("Additional Shipping Cost: ${controller.productModel.additionalShippingCost ?? 'N/A'}"),
                                 const SizedBox(height: 5),
                                 Text("Wholesale Price: ${controller.productModel.wholesalePrice ?? 'N/A'}"),
                                 const SizedBox(height: 5),
-                                Text("Unity: ${controller.productModel.unity ?? 'N/A'}"),
-                                const SizedBox(height: 5),
-                                if (controller.productModel.allImages != null && controller.productModel.allImages!.isNotEmpty)
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 10),
-                                      Text("All Images:"),
-                                      SizedBox(
-                                        height: 100,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: controller.productModel.allImages!.length,
-                                          itemBuilder: (context, index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(4.0),
-                                              child: Image.network(
-                                                controller.productModel.allImages![index],
-                                                height: 100,
-                                                width: 100,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+if (controller.productModel.unity != null && controller.productModel.unity!.isNotEmpty)
+  Text("Unity: ${controller.productModel.unity}"),
+const SizedBox(height: 5),
+
                               ]),
                         ),
                       )
