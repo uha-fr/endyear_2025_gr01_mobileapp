@@ -7,9 +7,9 @@ class OrderDetailsData {
   OrderDetailsData(this.crud);
 
   Future<OrderModel?> getData(int id) async {
-    print('OrderDetailsData: getData called with id: \$id');
-    var response = await crud.getData('\${LinkApi.orderDetails}?id=\$id');
-    print('OrderDetailsData: response received: \$response');
+    print('OrderDetailsData: getData called with id: $id');
+    var response = await crud.getData('${LinkApi.orderDetails}?id=$id');
+    print('OrderDetailsData: response received: $response');
     return response.fold((l) => null, (r) {
       if (r['success'] == true) {
         var orderJson = r['order'];

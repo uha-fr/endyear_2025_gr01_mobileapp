@@ -4,7 +4,9 @@ import 'package:endyear_2025_gr01_mobileapp/controller/orderdetails_controller.d
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order_model.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
-  final OrdersDetailsController controller = Get.put(OrdersDetailsController());
+  final OrdersDetailsController controller = Get.find<OrdersDetailsController>();
+
+  OrderDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,8 @@ class OrderDetailsScreen extends StatelessWidget {
       ),
       body: Obx(() {
         OrderModel? order = controller.order.value;
+        print('OrderDetailsScreen: order.deliveryAddress = ${order?.deliveryAddress}');
+        print('OrderDetailsScreen: order.invoiceAddress = ${order?.invoiceAddress}');
         if (order == null) {
           return Center(child: CircularProgressIndicator());
         }
@@ -30,7 +34,7 @@ class OrderDetailsScreen extends StatelessWidget {
               SizedBox(height: 8),
               Text('Payment: ${order.payment}', style: TextStyle(fontSize: 16)),
               SizedBox(height: 8),
-              Text('Total Paid (Tax Incl.): \$${order.totalPaidTaxIncl.toStringAsFixed(2)}', style: TextStyle(fontSize: 16)),
+              Text('Total Paid (Tax Incl.): ${order.totalPaidTaxIncl.toStringAsFixed(2)}', style: TextStyle(fontSize: 16)),
               SizedBox(height: 8),
               Text('Order Date: ${order.dateAdd}', style: TextStyle(fontSize: 16)),
               SizedBox(height: 16),

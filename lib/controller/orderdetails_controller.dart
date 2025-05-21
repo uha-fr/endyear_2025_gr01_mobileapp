@@ -13,10 +13,19 @@ class OrdersDetailsController extends GetxController {
     super.onInit();
     print('OrdersDetailsController: onInit called');
     orderDetailsData = OrderDetailsData(Crud());
+
+    // Fetch order details if id is passed as argument
+    var id = Get.arguments;
+    if (id != null && id is int) {
+      print('OrdersDetailsController: onInit fetching order details for id: $id');
+      fetchOrderDetails(id);
+    }
   }
 
   void setOrder(OrderModel selectedOrder) {
     print('OrdersDetailsController: setOrder called with id: ${selectedOrder.id}');
+    print('OrdersDetailsController: deliveryAddress: address1=${selectedOrder.deliveryAddress.address1}, address2=${selectedOrder.deliveryAddress.address2}, city=${selectedOrder.deliveryAddress.city}, postcode=${selectedOrder.deliveryAddress.postcode}, country=${selectedOrder.deliveryAddress.country}');
+    print('OrdersDetailsController: invoiceAddress: address1=${selectedOrder.invoiceAddress.address1}, address2=${selectedOrder.invoiceAddress.address2}, city=${selectedOrder.invoiceAddress.city}, postcode=${selectedOrder.invoiceAddress.postcode}, country=${selectedOrder.invoiceAddress.country}');
     order.value = selectedOrder;
   }
 

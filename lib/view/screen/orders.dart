@@ -1,5 +1,4 @@
 import 'package:endyear_2025_gr01_mobileapp/controller/orders_controller.dart';
-import 'package:endyear_2025_gr01_mobileapp/controller/orderdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/controller/clients_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/orders/customordercard.dart';
@@ -148,11 +147,7 @@ class CommandesPage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       print("Orders Screen: Order ${order.reference} tapped");
-                      final OrdersDetailsController detailsController = Get.put(
-                        OrdersDetailsController(),
-                      );
-                      detailsController.setOrder(order);
-                      Get.toNamed('/orderdetails');
+                      Get.toNamed('/orderdetails', arguments: order.id);
                     },
                     child: CustomOrderCard(
                       orderId: order.reference.toString(),
