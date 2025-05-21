@@ -45,17 +45,24 @@ class ProductsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DropdownButton<int?>(
-                       // value: controller.selectedCategoryId,
-                        hint: Text('Selectioner la catégorie'),
-                        items: [
-                          DropdownMenuItem(value: null, child: Text('Tous les Categories')),
-                          DropdownMenuItem(value: 1, child: Text('Category 1')),
-                          DropdownMenuItem(value: 2, child: Text('Category 2')),
-                        ],
-                        onChanged: (value) {
-                         // controller.updateCategoryFilter(value);
-                        },
-                      ),
+  value: controller.selectedCategoryId,
+  hint: const Text('Sélectionner une catégorie'),
+  items: [
+     DropdownMenuItem(value: null, child: Text('Toutes les catégories')),
+
+    ...controller.categories.map<DropdownMenuItem<int?>>((cat) {
+  return DropdownMenuItem<int?>(
+    value: cat['id'] as int?,  
+    child: Text(cat['name'].toString()),  
+  );
+}).toList(),
+
+  ],
+  onChanged: (value) {
+    controller.updateCategoryFilter(value);
+  },
+),
+
                       DropdownButton<String>(
                         value: controller.stockFilter,
                         items: [
