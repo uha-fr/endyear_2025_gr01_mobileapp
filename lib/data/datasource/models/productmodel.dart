@@ -58,7 +58,7 @@ class ProductModel {
     productImage = json['productImage'];
     productCount = json['productCount'];
     productActive = json['productActive'];
-    productPrice = json['productPrice'];
+productPrice = json['productPrice']?.toDouble();
     productDate = json['productDate'];
     productCat = json['productCat'];
     categoriesId = json['categoriesId'];

@@ -6,12 +6,22 @@ import 'package:get/get.dart';
 
 import '../../../core/constants/color.dart';
 import '../../../linkapi.dart';
+import 'dart:convert';
 
 
 class CustomListproduct extends GetView<ProductControllerImp> {
   final ProductModel productModel;
 //  final bool active;
   const CustomListproduct({super.key, required this.productModel});
+
+bool isBase64(String str) {
+    try {
+      final decoded = base64Decode(str);
+      return decoded.isNotEmpty;
+    } catch (e) {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +38,19 @@ class CustomListproduct extends GetView<ProductControllerImp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Hero(
+                       Hero(
                         tag: "${productModel.productId}",
-                        child: CachedNetworkImage(
-                          imageUrl:
-                          "${productModel.productImage ?? ''}",
-                          height: 100,
-                          fit: BoxFit.fill,
-                        ),
+                        child: isBase64(productModel.productImage ?? '')
+                            ? Image.memory(
+                                base64Decode(productModel.productImage ?? ''),
+                                height: 100,
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                productModel.productImage ?? '',
+                                height: 100,
+                                fit: BoxFit.fill,
+                              ),
                       ),
                       const SizedBox(height: 10),
                       Text(productModel.productName ?? '',
