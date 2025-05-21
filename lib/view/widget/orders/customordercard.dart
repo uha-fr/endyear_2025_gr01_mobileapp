@@ -86,50 +86,64 @@ class CustomOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
-        title: Text(
-          "#$orderId",
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      elevation: 2.5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
           children: [
-            Text(customerName),
-            const SizedBox(height: 4),
-            Text(
-              date,
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            ),
-          ],
-        ),
-        trailing: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              "${amount.toStringAsFixed(2)}€",
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(
-                color: _getStatusColor(status),
-                borderRadius: BorderRadius.circular(20),
+            const Icon(Icons.receipt_long, size: 36, color: Colors.grey),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "#$orderId",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(customerName, style: const TextStyle(fontSize: 14)),
+                  Text(
+                    date,
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
               ),
-              child: Text(
-                status,
-                style: TextStyle(
-                  color: _getTextColor(status),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "${amount.toStringAsFixed(2)} €",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: _getStatusColor(status),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    status,
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                      color: _getTextColor(status),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
