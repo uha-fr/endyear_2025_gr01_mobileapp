@@ -32,6 +32,8 @@ class ProductControllerImp extends ProductController {
   int? selectedCategoryId;
   String stockFilter = "all"; // all, in_stock, out_of_stock
 
+  String? alphabeticalOrder; // 'asc' or 'desc' or null
+
   @override
   void onInit() {
     intialData();
@@ -53,6 +55,11 @@ class ProductControllerImp extends ProductController {
     applyFilters();
   }
 
+  void updateAlphabeticalOrder(String? order) {
+    alphabeticalOrder = order;
+    applyFilters();
+  }
+
   void applyFilters() {
     filteredData = data.where((product) {
       bool matchesCategory = selectedCategoryId == null || product.categoriesId == selectedCategoryId;
@@ -65,6 +72,19 @@ class ProductControllerImp extends ProductController {
       }
       return matchesCategory && matchesStock;
     }).toList();
+
+    if (alphabeticalOrder != null) {
+      filteredData.sort((a, b) {
+        String nameA = a.productName?.toLowerCase() ?? '';
+        String nameB = b.productName?.toLowerCase() ?? '';
+        if (alphabeticalOrder == 'asc') {
+          return nameA.compareTo(nameB);
+        } else {
+          return nameB.compareTo(nameA);
+        }
+      });
+    }
+
     update();
   }
 
