@@ -24,6 +24,29 @@ class Address {
   }
 }
 
+class Product {
+  final int productId;
+  final String productName;
+  final double productPrice;
+  final int productQuantity;
+
+  Product({
+    required this.productId,
+    required this.productName,
+    required this.productPrice,
+    required this.productQuantity,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      productId: json['product_id'] ?? 0,
+      productName: json['product_name'] ?? '',
+      productPrice: (json['product_price'] as num?)?.toDouble() ?? 0.0,
+      productQuantity: json['product_quantity'] ?? 0,
+    );
+  }
+}
+
 class OrderModel {
   final int id;
   final String reference;
@@ -41,6 +64,7 @@ class OrderModel {
   final String giftMessage;
   final Address deliveryAddress;
   final Address invoiceAddress;
+  final List<Product> products;
 
   OrderModel({
     required this.id,
@@ -59,9 +83,13 @@ class OrderModel {
     required this.giftMessage,
     required this.deliveryAddress,
     required this.invoiceAddress,
+    required this.products,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
+    var productsJson = json['products'] as List<dynamic>? ?? [];
+    List<Product> productsList = productsJson.map((p) => Product.fromJson(p)).toList();
+
     return OrderModel(
       id: json['id'] ?? 0,
       reference: json['reference'] ?? '',
@@ -79,6 +107,7 @@ class OrderModel {
       giftMessage: json['giftMessage'] ?? '',
       deliveryAddress: Address.fromJson(json['deliveryAddress'] ?? {}),
       invoiceAddress: Address.fromJson(json['invoiceAddress'] ?? {}),
+      products: productsList,
     );
   }
 

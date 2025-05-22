@@ -8,7 +8,7 @@ class OrderController extends GetxController {
 
   var selectedState = 0.obs;
 
-  var sortAscending = true.obs;
+  var sortAscending = false.obs;
 
   late OrdersData ordersData;
 
