@@ -1,5 +1,4 @@
-/* import 'package:endyear_2025_gr01_mobileapp/controller/tasks_controller.dart';
-import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
+import 'package:endyear_2025_gr01_mobileapp/controller/tasks_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/tasks/customlistorder.dart';
@@ -16,16 +15,13 @@ class TasksPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Tâches a faire'),
-           centerTitle: true,
+          title: const Text('Tâches'),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Commandes à traiter'),
               Tab(text: 'Commandes à expédier'),
               Tab(text: 'Réapprovisionnement'),
             ],
-            indicatorColor:AppColor.primaryColor,
-            labelColor: AppColor.primaryColor,
           ),
         ),
         body: TabBarView(
@@ -72,5 +68,3 @@ class TasksPage extends StatelessWidget {
     );
   }
 }
-
-*/

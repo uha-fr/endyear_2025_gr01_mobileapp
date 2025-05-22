@@ -81,4 +81,9 @@ class OrderModel {
       invoiceAddress: Address.fromJson(json['invoiceAddress'] ?? {}),
     );
   }
+
+  @override
+  String toString() {
+    return 'OrderModel(id: $id, reference: $reference, customerName: $customerName, currentStateName: $currentStateName, totalPaidTaxIncl: $totalPaidTaxIncl)';
+  }
 }

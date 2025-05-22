@@ -1,9 +1,9 @@
-/*
-
 import 'package:endyear_2025_gr01_mobileapp/controller/orderdetails_controller.dart';
+import 'package:endyear_2025_gr01_mobileapp/core/class/crud.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order_model.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/ordersData.dart';
 import 'package:get/get.dart';
 
 abstract class TasksController extends GetxController {
@@ -23,15 +23,24 @@ class TasksControllerImp extends TasksController {
   List<ProductModel> restockProducts = [];
 
   late StatusRequest statusRequest;
+  late OrdersData ordersData;
 
   @override
   void onInit() {
+    ordersData = OrdersData(Crud());
     intialData();
     super.onInit();
   }
 
   @override
   intialData() {
+    fetchOrders();
+
+  }
+
+  void fetchOrders() async {
+    var fetchedOrders = await ordersData.getData();
+    orders.assignAll(fetchedOrders);
     getOrdersToProcess();
     getOrdersToShip();
     getRestockProducts();
@@ -39,68 +48,32 @@ class TasksControllerImp extends TasksController {
 
   @override
   getOrdersToProcess() {
-    // Mock orders with payment accepted
-    orders = [
-      OrderModel(
-        id: 1,
-        reference: "#12345",
-        customerName: "John Doe",
-        payment: "accepted",
-        currentState: 1,
-        totalProducts: 3,
-      ),
-      OrderModel(
-        id: 2,
-        reference: "#12342",
-        customerName: "Sarah Williams",
-        payment: "accepted",
-        currentState: 1,
-        totalProducts: 1,
-      ),
-    ];
-    ordersToProcess =
-        orders.where((order) => order.payment == "accepted").toList();
+    ordersToProcess = orders.where((order) => order.currentStateName == "Paiement accepté").toList();
     update();
   }
 
   @override
   getOrdersToShip() {
-    // Mock orders with status "prepared" (currentState == 2)
-    orders = [
-      OrderModel(
-        id: 3,
-        reference: "#12340",
-        customerName: "Robert Jones",
-        payment: "accepted",
-        currentState: 2,
-        totalProducts: 2,
-      ),
-    ];
-    ordersToShip = orders.where((order) => order.currentState == 2).toList();
+    ordersToShip = orders.where((order) => order.currentStateName == "En cours de préparation").toList();
     update();
   }
 
   @override
   getRestockProducts() {
     // Mock products with productCount < 10
-    products = [
-     
-    ];
-    restockProducts =
-        products.where((product) {
-         int count =  0;
-          return count < 10;
-        }).toList();
+    products = [];
+    restockProducts = products.where((product) {
+      //int count = int.tryParse(product.productCount ?? "0") ?? 0;
+      return true;
+    }).toList();
     update();
   }
 
   @override
   goToPageOrderDetails(OrderModel order) {
-    final OrdersDetailsController detailsController = Get.put(
-      OrdersDetailsController(),
-    );
+    final OrdersDetailsController detailsController = Get.put(OrdersDetailsController());
     detailsController.setOrder(order);
-    Get.toNamed('/commandsdetails');
+    Get.toNamed('/orderdetails');
   }
 
   @override
@@ -108,5 +81,3 @@ class TasksControllerImp extends TasksController {
     Get.toNamed("productdetails", arguments: {"productModel": productModel});
   }
 }
-
-*/
