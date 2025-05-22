@@ -1,111 +1,84 @@
+class Address {
+  final String address1;
+  final String address2;
+  final String postcode;
+  final String city;
+  final String country;
+
+  Address({
+    required this.address1,
+    required this.address2,
+    required this.postcode,
+    required this.city,
+    required this.country,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+      address1: json['address1'] ?? '',
+      address2: json['address2'] ?? '',
+      postcode: json['postcode'] ?? '',
+      city: json['city'] ?? '',
+      country: json['country'] ?? '',
+    );
+  }
+}
+
 class OrderModel {
-  int? id;
-  String? reference;
-  int? idCart;
-  int? idCustomer;
-  String? customerName;
-  int? idCurrency;
-  int? idAddressDelivery;
-  int? idAddressInvoice;
-  int? idCarrier;
-  int? currentState;
-  String? payment;
-  String? module;
-  double? totalPaid;
-  double? totalPaidTaxIncl;
-  double? totalPaidTaxExcl;
-  double? totalProducts;
-  double? totalShipping;
-  double? conversionRate;
-  DateTime? dateAdd;
-  DateTime? dateUpd;
-  bool? valid;
-  bool? recyclable;
-  bool? gift;
-  String? giftMessage;
+  final int id;
+  final String reference;
+  final int idCustomer;
+  final String customerName;
+  final String currentStateName;
+  final String payment;
+  final String module;
+  final double totalPaidTaxIncl;
+  final String dateAdd;
+  final String dateUpd;
+  final bool valid;
+  final bool recyclable;
+  final bool gift;
+  final String giftMessage;
+  final Address deliveryAddress;
+  final Address invoiceAddress;
 
   OrderModel({
-    this.id,
-    this.reference,
-    this.idCart,
-    this.idCustomer,
-    this.customerName,
-    this.idCurrency,
-    this.idAddressDelivery,
-    this.idAddressInvoice,
-    this.idCarrier,
-    this.currentState,
-    this.payment,
-    this.module,
-    this.totalPaid,
-    this.totalPaidTaxIncl,
-    this.totalPaidTaxExcl,
-    this.totalProducts,
-    this.totalShipping,
-    this.conversionRate,
-    this.dateAdd,
-    this.dateUpd,
-    this.valid,
-    this.recyclable,
-    this.gift,
-    this.giftMessage,
+    required this.id,
+    required this.reference,
+    required this.idCustomer,
+    required this.customerName,
+    required this.currentStateName,
+    required this.payment,
+    required this.module,
+    required this.totalPaidTaxIncl,
+    required this.dateAdd,
+    required this.dateUpd,
+    required this.valid,
+    required this.recyclable,
+    required this.gift,
+    required this.giftMessage,
+    required this.deliveryAddress,
+    required this.invoiceAddress,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
-      id: json['id'],
-      reference: json['reference'],
-      idCart: json['idCart'],
-      idCustomer: json['idCustomer'],
-      customerName: json['customerName'],
-      idCurrency: json['idCurrency'],
-      idAddressDelivery: json['idAddressDelivery'],
-      idAddressInvoice: json['idAddressInvoice'],
-      idCarrier: json['idCarrier'],
-      currentState: json['currentState'],
-      payment: json['payment'],
-      module: json['module'],
-      totalPaid: (json['totalPaid'] as num?)?.toDouble(),
-      totalPaidTaxIncl: (json['totalPaidTaxIncl'] as num?)?.toDouble(),
-      totalPaidTaxExcl: (json['totalPaidTaxExcl'] as num?)?.toDouble(),
-      totalProducts: (json['totalProducts'] as num?)?.toDouble(),
-      totalShipping: (json['totalShipping'] as num?)?.toDouble(),
-      conversionRate: (json['conversionRate'] as num?)?.toDouble(),
-      dateAdd: json['dateAdd'] != null ? DateTime.parse(json['dateAdd']) : null,
-      dateUpd: json['dateUpd'] != null ? DateTime.parse(json['dateUpd']) : null,
-      valid: json['valid'],
-      recyclable: json['recyclable'],
-      gift: json['gift'],
-      giftMessage: json['giftMessage'],
+      id: json['id'] ?? 0,
+      reference: json['reference'] ?? '',
+      idCustomer: json['idCustomer'] ?? 0,
+      customerName: json['customerName'] ?? '',
+      currentStateName: json['currentStateName'] ?? '',
+      payment: json['payment'] ?? '',
+      module: json['module'] ?? '',
+      totalPaidTaxIncl: (json['totalPaidTaxIncl'] as num?)?.toDouble() ?? 0.0,
+      dateAdd: json['dateAdd'] ?? '',
+      dateUpd: json['dateUpd'] ?? '',
+      valid: json['valid'] ?? false,
+      recyclable: json['recyclable'] ?? false,
+      gift: json['gift'] ?? false,
+      giftMessage: json['giftMessage'] ?? '',
+      deliveryAddress: Address.fromJson(json['deliveryAddress'] ?? {}),
+      invoiceAddress: Address.fromJson(json['invoiceAddress'] ?? {}),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'reference': reference,
-      'idCart': idCart,
-      'idCustomer': idCustomer,
-      'customerName': customerName,
-      'idCurrency': idCurrency,
-      'idAddressDelivery': idAddressDelivery,
-      'idAddressInvoice': idAddressInvoice,
-      'idCarrier': idCarrier,
-      'currentState': currentState,
-      'payment': payment,
-      'module': module,
-      'totalPaid': totalPaid,
-      'totalPaidTaxIncl': totalPaidTaxIncl,
-      'totalPaidTaxExcl': totalPaidTaxExcl,
-      'totalProducts': totalProducts,
-      'totalShipping': totalShipping,
-      'conversionRate': conversionRate,
-      'dateAdd': dateAdd?.toIso8601String(),
-      'dateUpd': dateUpd?.toIso8601String(),
-      'valid': valid,
-      'recyclable': recyclable,
-      'gift': gift,
-      'giftMessage': giftMessage,
-    };
   }
 }

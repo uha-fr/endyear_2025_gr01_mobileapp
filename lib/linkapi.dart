@@ -5,7 +5,10 @@ class LinkApi {
 
   // products
   static const String products = "$server/products.php";
- 
- //orders
-   static const String orders = "$server/orders.php";
+
+  //orders
+  static const String orders = "$server/orders.php";
+
+  // order details
+  static const String orderDetails = "$server/orderDetails.php";
 }

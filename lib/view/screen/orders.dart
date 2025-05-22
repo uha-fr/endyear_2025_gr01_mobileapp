@@ -1,5 +1,4 @@
 import 'package:endyear_2025_gr01_mobileapp/controller/orders_controller.dart';
-import 'package:endyear_2025_gr01_mobileapp/controller/orderdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/controller/clients_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/orders/customordercard.dart';
@@ -14,6 +13,7 @@ class CommandesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Orders Screen: Building orders list UI");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Commandes'),
@@ -29,34 +29,72 @@ class CommandesPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Filtrer par état
-                Obx(
-                  () => DropdownButton<int>(
+                Obx(() {
+                  print(
+                    "Orders Screen: Selected filter state: ${orderController.selectedState.value}",
+                  );
+                  return DropdownButton<int>(
                     isDense: true,
                     value: orderController.selectedState.value,
-                    items: [
-                      const DropdownMenuItem(value: 0, child: Text('All')),
-                      const DropdownMenuItem(
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('All')),
+                      DropdownMenuItem(
                         value: 1,
-                        child: Text('Processing'),
+                        child: Text('En attente du paiement par chèque'),
                       ),
-                      const DropdownMenuItem(value: 2, child: Text('Shipped')),
-                      const DropdownMenuItem(value: 3, child: Text('Pending')),
-                      const DropdownMenuItem(
-                        value: 4,
-                        child: Text('Delivered'),
+                      DropdownMenuItem(
+                        value: 2,
+                        child: Text('Paiement accepté'),
                       ),
-                      const DropdownMenuItem(value: 5, child: Text('Canceled')),
+                      DropdownMenuItem(
+                        value: 3,
+                        child: Text('En cours de préparation'),
+                      ),
+                      DropdownMenuItem(value: 4, child: Text('Expédié')),
+                      DropdownMenuItem(value: 5, child: Text('Livré')),
+                      DropdownMenuItem(value: 6, child: Text('Annulé')),
+                      DropdownMenuItem(value: 7, child: Text('Remboursé')),
+                      DropdownMenuItem(
+                        value: 8,
+                        child: Text('Erreur de paiement'),
+                      ),
+                      DropdownMenuItem(
+                        value: 9,
+                        child: Text('En attente de réapprovisionnement (payé)'),
+                      ),
+                      DropdownMenuItem(
+                        value: 10,
+                        child: Text('En attente de virement bancaire'),
+                      ),
+                      DropdownMenuItem(
+                        value: 11,
+                        child: Text('Paiement à distance accepté'),
+                      ),
+                      DropdownMenuItem(
+                        value: 12,
+                        child: Text(
+                          'En attente de réapprovisionnement (non payé)',
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 13,
+                        child: Text('En attente de paiement à la livraison'),
+                      ),
                     ],
                     onChanged: (value) {
                       if (value != null) {
+                        print("Orders Screen: Filter state changed to $value");
                         orderController.updateFilterState(value);
                       }
                     },
-                  ),
-                ),
+                  );
+                }),
                 // Trier par date
-                Obx(
-                  () => DropdownButton<bool>(
+                Obx(() {
+                  print(
+                    "Orders Screen: Selected sort order: ${orderController.sortAscending.value}",
+                  );
+                  return DropdownButton<bool>(
                     isDense: true,
                     value: orderController.sortAscending.value,
                     items: const [
@@ -65,20 +103,29 @@ class CommandesPage extends StatelessWidget {
                     ],
                     onChanged: (value) {
                       if (value != null) {
+                        print(
+                          "Orders Screen: Sort order changed to ${value ? 'ascending' : 'descending'}",
+                        );
                         orderController.updateSortOrder(value);
                       }
                     },
-                  ),
-                ),
+                  );
+                }),
               ],
             ),
           ),
           Expanded(
             child: Obx(() {
               if (orderController.orders.isEmpty) {
+                print(
+                  "Orders Screen: Orders list is empty, showing loading indicator",
+                );
                 return const Center(child: CircularProgressIndicator());
               }
               final filteredOrders = orderController.filteredSortedOrders;
+              print(
+                "Orders Screen: Number of orders to display: ${filteredOrders.length}",
+              );
               if (filteredOrders.isEmpty) {
                 return const Center(child: Text('No orders found.'));
               }
@@ -92,21 +139,22 @@ class CommandesPage extends StatelessWidget {
                   final clientName =
                       client != null
                           ? '${client.firstname} ${client.lastname}'
-                          : 'No Name';
+                          : order
+                              .customerName; // fallback to order.customerName
+                  print(
+                    "Orders Screen: Displaying order ${order.reference} for client $clientName",
+                  );
                   return GestureDetector(
                     onTap: () {
-                      final OrdersDetailsController detailsController = Get.put(
-                        OrdersDetailsController(),
-                      );
-                      detailsController.setOrder(order);
-                      Get.toNamed('/commandsdetails');
+                      print("Orders Screen: Order ${order.reference} tapped");
+                      Get.toNamed('/orderdetails', arguments: order.id);
                     },
                     child: CustomOrderCard(
                       orderId: order.reference.toString(),
                       customerName: clientName,
-                      date: order.dateAdd?.toString() ?? 'N/A',
-                      amount: order.totalPaid ?? 0.0,
-                      status: _getStatusFromState(order.currentState),
+                      date: order.dateAdd.toString(),
+                      amount: order.totalPaidTaxIncl,
+                      status: order.currentStateName,
                     ),
                   );
                 },
@@ -116,22 +164,5 @@ class CommandesPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _getStatusFromState(int? currentState) {
-    switch (currentState) {
-      case 1:
-        return 'Processing';
-      case 2:
-        return 'Shipped';
-      case 3:
-        return 'Pending';
-      case 4:
-        return 'Delivered';
-      case 5:
-        return 'Canceled';
-      default:
-        return 'Unknown';
-    }
   }
 }
