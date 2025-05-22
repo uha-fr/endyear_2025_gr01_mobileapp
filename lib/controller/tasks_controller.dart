@@ -4,6 +4,7 @@ import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order_model.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/ordersData.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/productsData.dart';
 import 'package:get/get.dart';
 
 abstract class TasksController extends GetxController {
@@ -19,15 +20,14 @@ class TasksControllerImp extends TasksController {
   List<OrderModel> orders = [];
   List<OrderModel> ordersToProcess = [];
   List<OrderModel> ordersToShip = [];
-  List<ProductModel> products = [];
   List<ProductModel> restockProducts = [];
 
   late StatusRequest statusRequest;
-  late OrdersData ordersData;
+  late OrdersData  ordersData = OrdersData(Crud());
+  late ProductsData productsData = ProductsData(Crud());
 
   @override
   void onInit() {
-    ordersData = OrdersData(Crud());
     intialData();
     super.onInit();
   }
@@ -35,7 +35,7 @@ class TasksControllerImp extends TasksController {
   @override
   intialData() {
     fetchOrders();
-
+    getRestockProducts();
   }
 
   void fetchOrders() async {
@@ -58,16 +58,21 @@ class TasksControllerImp extends TasksController {
     update();
   }
 
-  @override
-  getRestockProducts() {
-    // Mock products with productCount < 10
-    products = [];
-    restockProducts = products.where((product) {
-      //int count = int.tryParse(product.productCount ?? "0") ?? 0;
-      return true;
-    }).toList();
-    update();
-  }
+
+@override
+getRestockProducts() async {
+  var response = await productsData.getData();
+  restockProducts = response
+      .map((e) => ProductModel.fromJson(e))
+      .where((product) {
+        int count = product.productCount ?? 0;
+        return count < 10;
+      })
+      .toList();
+
+  update();
+}
+
 
   @override
   goToPageOrderDetails(OrderModel order) {
