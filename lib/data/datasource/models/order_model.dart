@@ -28,11 +28,13 @@ class Product {
   final int productId;
   final String productName;
   final double productPrice;
+  final int productQuantity;
 
   Product({
     required this.productId,
     required this.productName,
     required this.productPrice,
+    required this.productQuantity,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class Product {
       productId: json['product_id'] ?? 0,
       productName: json['product_name'] ?? '',
       productPrice: (json['product_price'] as num?)?.toDouble() ?? 0.0,
+      productQuantity: json['product_quantity'] ?? 0,
     );
   }
 }

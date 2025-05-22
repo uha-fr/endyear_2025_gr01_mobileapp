@@ -12,7 +12,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
   OrderDetailsScreen({Key? key}) : super(key: key);
 
-  // Helper method to format date
+  // Méthode helper pour formater la date
   String formatDate(String dateStr) {
     if (dateStr.isEmpty) return 'Non disponible';
     try {
@@ -23,7 +23,7 @@ class OrderDetailsScreen extends StatelessWidget {
     }
   }
 
-  // Helper method to get status color
+  // Méthode helper pour obtenir la couleur du statut
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'en attente du paiement par chèque':
@@ -57,54 +57,71 @@ class OrderDetailsScreen extends StatelessWidget {
     }
   }
 
-  // Helper method to get payment color
+  // Méthode helper pour obtenir la couleur du paiement
   Color _getPaymentColor(String payment) {
     switch (payment.toLowerCase()) {
-      case 'paid':
-      case 'payé':
+      case 'virement bancaire':
         return Colors.green;
-      case 'pending':
-      case 'en attente':
+      case 'cheque':
         return Colors.orange;
+      case 'paiement à la livraison':
+        return Colors.blue;
       default:
         return Colors.grey;
     }
   }
 
+  // Méthode pour obtenir la méthode de paiement
+  String _getPaymentMethod(String module, String payment) {
+    switch (module) {
+      case 'ps_wirepayment':
+        return 'Virement bancaire';
+      case 'ps_checkpayment':
+        return 'Chèque';
+      case 'ps_cashondelivery':
+        return 'Paiement à la livraison';
+      default:
+        return payment;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Initialize French locale for date formatting
+    // Initialiser la locale française pour le formatage des dates
     initializeDateFormatting('fr_FR', null);
 
-    return Obx(() {
-      OrderModel? order = controller.order.value;
+    return Scaffold(
+      body: Obx(() {
+        OrderModel? order = controller.order.value;
 
-      if (order == null) {
-        return Scaffold(
-          appBar: AppBar(title: Text('Détails de la commande')),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColor.primaryColor,
+        if (order == null) {
+          return Scaffold(
+            appBar: AppBar(title: Text('Détails de la commande')),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColor.primaryColor,
+                    ),
                   ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Chargement des détails...',
-                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                ),
-              ],
+                  SizedBox(height: 16),
+                  Text(
+                    'Chargement des détails...',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }
+          );
+        }
 
-      return Scaffold(
-        body: CustomScrollView(
+        String paymentMethod = _getPaymentMethod(order.module, order.payment);
+
+        return CustomScrollView(
           slivers: [
+            // AppBar moderne avec dégradé
             SliverAppBar(
               expandedHeight: 250,
               pinned: true,
@@ -218,7 +235,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Status bar
+                    // Barre de statut
                     Container(
                       padding: EdgeInsets.symmetric(
                         vertical: 12,
@@ -253,8 +270,8 @@ class OrderDetailsScreen extends StatelessWidget {
                           _buildStatusItem(
                             icon: Icons.payment,
                             label: 'Paiement',
-                            value: order.payment,
-                            color: _getPaymentColor(order.payment),
+                            value: paymentMethod,
+                            color: _getPaymentColor(paymentMethod),
                           ),
                           Container(
                             height: 40,
@@ -265,7 +282,7 @@ class OrderDetailsScreen extends StatelessWidget {
                             icon: Icons.euro,
                             label: 'Total',
                             value:
-                                '${order.totalPaidTaxIncl.toStringAsFixed(2)}',
+                                '${order.totalPaidTaxIncl.toStringAsFixed(2)}€',
                             color: Colors.green,
                           ),
                         ],
@@ -274,7 +291,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
                     SizedBox(height: 20),
 
-                    // Order Information Section
+                    // Section Informations de la Commande
                     _buildSectionTitle('Informations de la Commande'),
                     _buildInfoCard([
                       _buildDetailItem(
@@ -293,15 +310,20 @@ class OrderDetailsScreen extends StatelessWidget {
                         formatDate(order.dateAdd),
                       ),
                       _buildDetailItem(
+                        Icons.payment,
+                        'Méthode de paiement',
+                        paymentMethod,
+                      ),
+                      _buildDetailItem(
                         Icons.euro_symbol,
                         'Total payé (TTC)',
-                        '${order.totalPaidTaxIncl.toStringAsFixed(2)}',
+                        '${order.totalPaidTaxIncl.toStringAsFixed(2)}€',
                       ),
                     ]),
 
                     SizedBox(height: 20),
 
-                    // Delivery Address Section
+                    // Section Adresse de Livraison
                     _buildSectionTitle('Adresse de Livraison'),
                     _buildAddressCard(
                       order.deliveryAddress,
@@ -310,11 +332,11 @@ class OrderDetailsScreen extends StatelessWidget {
 
                     SizedBox(height: 20),
 
-                    // Invoice Address Section
+                    // Section Adresse de Facturation
                     _buildSectionTitle('Adresse de Facturation'),
                     _buildAddressCard(order.invoiceAddress, Icons.receipt_long),
 
-                    // Gift Section (if applicable)
+                    // Section Cadeau (si applicable)
                     if (order.gift) ...[
                       SizedBox(height: 20),
                       _buildSectionTitle('Message Cadeau'),
@@ -364,7 +386,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
                     SizedBox(height: 20),
 
-                    // Products Section
+                    // Section Produits
                     _buildSectionTitle('Produits'),
                     _buildProductsCard(order.products),
 
@@ -374,12 +396,12 @@ class OrderDetailsScreen extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 
-  // Helper methods for UI components
+  // Méthodes helper pour les composants UI
   Widget _buildStatusItem({
     required IconData icon,
     required String label,
@@ -635,6 +657,14 @@ class OrderDetailsScreen extends StatelessWidget {
                                   color: Colors.black87,
                                 ),
                               ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Quantité: ${product.productQuantity}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -650,7 +680,7 @@ class OrderDetailsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 2),
                             Text(
-                              '${product.productPrice.toStringAsFixed(2)}',
+                              '${product.productPrice.toStringAsFixed(2)}€',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
