@@ -265,7 +265,7 @@ class OrderDetailsScreen extends StatelessWidget {
                             icon: Icons.euro,
                             label: 'Total',
                             value:
-                                '€${order.totalPaidTaxIncl.toStringAsFixed(2)}',
+                                '${order.totalPaidTaxIncl.toStringAsFixed(2)}',
                             color: Colors.green,
                           ),
                         ],
@@ -284,7 +284,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       ),
                       _buildDetailItem(
                         Icons.person,
-                        'Client',
+                        'Nom du client',
                         order.customerName,
                       ),
                       _buildDetailItem(
@@ -295,7 +295,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       _buildDetailItem(
                         Icons.euro_symbol,
                         'Total payé (TTC)',
-                        '€${order.totalPaidTaxIncl.toStringAsFixed(2)}',
+                        '${order.totalPaidTaxIncl.toStringAsFixed(2)}',
                       ),
                     ]),
 
@@ -361,6 +361,12 @@ class OrderDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ],
+
+                    SizedBox(height: 20),
+
+                    // Products Section
+                    _buildSectionTitle('Produits'),
+                    _buildProductsCard(order.products),
 
                     SizedBox(height: 30),
                   ],
@@ -568,6 +574,96 @@ class OrderDetailsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildProductsCard(List<dynamic> products) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 6,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        children:
+            products
+                .map(
+                  (product) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 16.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: AppColor.primaryColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.shopping_basket,
+                            color: AppColor.primaryColor,
+                            size: 20,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Produit',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              SizedBox(height: 2),
+                              Text(
+                                product.productName,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Prix',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              '${product.productPrice.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green[700],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                .toList(),
       ),
     );
   }
