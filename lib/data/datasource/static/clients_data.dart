@@ -1,3 +1,4 @@
+/*
 import '../models/client_model.dart';
 
 final List<Customer> clients = [
@@ -44,3 +45,4 @@ final List<Customer> clients = [
     groupIds: [1],
   ),
 ];
+*/
