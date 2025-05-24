@@ -19,9 +19,12 @@ class ClientDetailsPage extends StatelessWidget {
     }
   }
 
-  // Helper method to get gender text
-  String _getGenderText(int idGender) {
-    return idGender == 1 ? 'Homme' : (idGender == 2 ? 'Femme' : 'Autre');
+  String _getGenderText(String? gender) {
+    if (gender == null) return 'Autre';
+    final g = gender.toLowerCase();
+    if (g == 'homme' || g == 'male') return 'Homme';
+    if (g == 'femme' || g == 'female') return 'Femme';
+    return 'Autre';
   }
 
   @override
@@ -29,7 +32,7 @@ class ClientDetailsPage extends StatelessWidget {
     // Initialize French locale for date formatting
     initializeDateFormatting('fr_FR', null);
 
-    return Obx(() { 
+    return Obx(() {
       final client = controller.selectedClient.value;
 
       if (client == null) {
@@ -40,8 +43,52 @@ class ClientDetailsPage extends StatelessWidget {
       }
 
       return Scaffold(
-        
-      ); 
+        appBar: AppBar(title: Text('Détails du client')),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              Text(
+                '${client.firstname} ${client.lastname}',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Email: ${client.email.isNotEmpty ? client.email : 'Non disponible'}',
+              ),
+              SizedBox(height: 8),
+              Text('Genre: ${_getGenderText(client.gender)}'),
+              SizedBox(height: 8),
+              Text('Date de naissance: ${client.birthday ?? 'Non disponible'}'),
+              SizedBox(height: 8),
+              Text('Actif: ${client.active == 1 ? 'Oui' : 'Non'}'),
+              SizedBox(height: 8),
+              Text('Date d\'ajout: ${formatDate(client.dateAdd)}'),
+              SizedBox(height: 8),
+              Text(
+                'Date de mise à jour: ${client.dateUpd != null ? formatDate(client.dateUpd!) : 'Non disponible'}',
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Historique des commandes:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Obx(() {
+                if (controller.orderIds.isEmpty) {
+                  return Text('Aucune commande trouvée.');
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:
+                      controller.orderIds
+                          .map((orderId) => Text('Commande ID: $orderId'))
+                          .toList(),
+                );
+              }),
+            ],
+          ),
+        ),
+      );
     });
   }
 }
