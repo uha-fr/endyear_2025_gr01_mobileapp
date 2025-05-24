@@ -19,6 +19,7 @@ class ClientDetailsPage extends StatelessWidget {
     }
   }
 
+  // Helper method to get gender text
   String _getGenderText(String? gender) {
     if (gender == null) return 'Autre';
     final g = gender.toLowerCase();
@@ -78,11 +79,19 @@ class ClientDetailsPage extends StatelessWidget {
                   return Text('Aucune commande trouvée.');
                 }
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children:
-                      controller.orderIds
-                          .map((orderId) => Text('Commande ID: $orderId'))
-                          .toList(),
+                      controller.orderIds.map((orderId) {
+                        return ListTile(
+                          title: Text('Commande ID: $orderId'),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.toNamed(
+                              '/orderdetails',
+                              arguments: orderId,
+                            );
+                          },
+                        );
+                      }).toList(),
                 );
               }),
             ],
