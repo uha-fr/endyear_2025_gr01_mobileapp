@@ -1,19 +1,26 @@
 import 'package:get/get.dart';
-import '../data/datasource/models/client_model.dart';
-import '../data/datasource/static/clients_data.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/clientsData.dart';
+import 'package:endyear_2025_gr01_mobileapp/core/class/crud.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/client_model.dart';
 
 class ClientsController extends GetxController {
-  var clientsList = <Customer>[].obs;
-  var selectedClient = Rxn<Customer>();
+  var clients = <Customer>[].obs;
+
+  List<Customer> get clientsList => clients;
+
+  late ClientsData clientsData;
 
   @override
   void onInit() {
     super.onInit();
-    // Initialize with static clients data
-    clientsList.assignAll(clients);
+    clientsData = ClientsData(Crud());
+    fetchClients();
   }
 
-  void selectClient(Customer client) {
-    selectedClient.value = client;
+  void fetchClients() async {
+    print('ClientsController: Fetching clients...');
+    var data = await clientsData.getData();
+    print('ClientsController: Fetched clients count: ${data.length}');
+    clients.assignAll(data);
   }
 }

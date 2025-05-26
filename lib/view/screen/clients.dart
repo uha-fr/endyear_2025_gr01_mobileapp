@@ -22,6 +22,7 @@ class ClientsPage extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: Obx(() {
+        print('ClientsPage: clientsList length: ${controller.clientsList.length}');
         return ListView.builder(
           itemCount: controller.clientsList.length,
           itemBuilder: (context, index) {
