@@ -1,10 +1,9 @@
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/order_model.dart';
 import 'package:flutter/material.dart';
-import 'package:endyear_2025_gr01_mobileapp/controller/tasks_controller.dart';
 import 'package:get/get.dart';
 
-class CustomListOrder extends GetView<TasksControllerImp> {
+class CustomListOrder extends StatelessWidget {
   final OrderModel order;
 
   const CustomListOrder({super.key, required this.order});
@@ -13,7 +12,8 @@ class CustomListOrder extends GetView<TasksControllerImp> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        controller.goToPageOrderDetails(order);
+        // Navigate to order details passing order id as argument, same as in orders.dart
+        Get.toNamed('/orderdetails', arguments: order.id);
       },
       borderRadius: BorderRadius.circular(16),
       child: Card(
