@@ -13,4 +13,6 @@ class LinkApi {
   static const String clients = "$server/customers.php";
 
   static const String clientDetails = "$server/customerDetails.php";
+
+  static const String statistics = "$server/statistics.php";
 }
