@@ -3,6 +3,7 @@ class LinkApi {
 
   // products
   static const String products = "$server/products.php";
+  static const String productDetails = "$server/produitDetails.php";
 
   //orders
   static const String orders = "$server/orders.php";

@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/productdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -135,37 +136,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 ...order.products.map(
                   (product) => InkWell(
                     onTap: () {
-                      // Convert Product to ProductModel to pass to product details screen
-                      var productModel = ProductModel(
-                        productId: product.productId,
-                        productName: product.productName,
-                        productPrice: product.productPrice,
-                        productCount: product.productQuantity,
-                        productDesc: '',
-                        productImage: '',
-                        productActive: true,
-                        productDate: '',
-                        productCat: 0,
-                        categoriesId: 0,
-                        categoriesName: '',
-                        categoriesImage: '',
-                        categoriesDatetime: '',
-                        reference: '',
-                        condition: '',
-                        manufacturer: '',
-                        weight: 0.0,
-                        availableNow: '',
-                        availableLater: '',
-                        descriptionShort: '',
-                        additionalShippingCost: 0,
-                        wholesalePrice: 0.0,
-                        unity: '',
-                        allImages: [],
-                      );
-                      Get.toNamed(
-                        'productdetails',
-                        arguments: {'productModel': productModel},
-                      );
+                      controller.goToProductDetails(product.productId);
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
