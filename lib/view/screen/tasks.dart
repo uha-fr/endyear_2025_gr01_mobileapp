@@ -16,55 +16,76 @@ class TasksPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Tâches a faire'),
-          centerTitle: true,
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Commandes à traiter'),
-              Tab(text: 'Commandes à expédier'),
-              Tab(text: 'Réapprovisionnement'),
-            ],
-            indicatorColor:AppColor.primaryColor,
-            labelColor: AppColor.primaryColor,
+          backgroundColor: AppColor.primaryColor,
+          title: const Text(
+            'Tâches à faire',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          centerTitle: true,
+          elevation: 0, // Optionnel : enlève l’ombre
         ),
-        body: TabBarView(
+        body: Column(
           children: [
-            GetBuilder<TasksControllerImp>(
-              builder: (controller) {
-                final ordersToProcess = controller.ordersToProcess;
-                return ListView.builder(
-                  itemCount: ordersToProcess.length,
-                  itemBuilder: (context, index) {
-                    final order = ordersToProcess[index];
-                    return CustomListOrder(order: order);
-                  },
-                );
-              },
+            // TabBar avec fond blanc
+            Container(
+              color: Colors.white,
+              child: const TabBar(
+                tabs: [
+                  Tab(text: 'Commandes à traiter'),
+                  Tab(text: 'Commandes à expédier'),
+                  Tab(text: 'Réapprovisionnement'),
+                ],
+                indicatorColor: AppColor.primaryColor,
+                labelColor: AppColor.primaryColor,
+                unselectedLabelColor: Colors.black54,
+              ),
             ),
-            GetBuilder<TasksControllerImp>(
-              builder: (controller) {
-                final ordersToShip = controller.ordersToShip;
-                return ListView.builder(
-                  itemCount: ordersToShip.length,
-                  itemBuilder: (context, index) {
-                    final order = ordersToShip[index];
-                    return CustomListOrder(order: order);
-                  },
-                );
-              },
-            ),
-            GetBuilder<TasksControllerImp>(
-              builder: (controller) {
-                final restockProducts = controller.restockProducts;
-                return ListView.builder(
-                  itemCount: restockProducts.length,
-                  itemBuilder: (context, index) {
-                    final product = restockProducts[index];
-                    return CustomListProduct(product: product);
-                  },
-                );
-              },
+            // Le contenu selon le tab sélectionné
+            Expanded(
+              child: TabBarView(
+                children: [
+                  GetBuilder<TasksControllerImp>(
+                    builder: (controller) {
+                      final ordersToProcess = controller.ordersToProcess;
+                      return ListView.builder(
+                        itemCount: ordersToProcess.length,
+                        itemBuilder: (context, index) {
+                          final order = ordersToProcess[index];
+                          return CustomListOrder(order: order);
+                        },
+                      );
+                    },
+                  ),
+                  GetBuilder<TasksControllerImp>(
+                    builder: (controller) {
+                      final ordersToShip = controller.ordersToShip;
+                      return ListView.builder(
+                        itemCount: ordersToShip.length,
+                        itemBuilder: (context, index) {
+                          final order = ordersToShip[index];
+                          return CustomListOrder(order: order);
+                        },
+                      );
+                    },
+                  ),
+                  GetBuilder<TasksControllerImp>(
+                    builder: (controller) {
+                      final restockProducts = controller.restockProducts;
+                      return ListView.builder(
+                        itemCount: restockProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = restockProducts[index];
+                          return CustomListProduct(product: product);
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
