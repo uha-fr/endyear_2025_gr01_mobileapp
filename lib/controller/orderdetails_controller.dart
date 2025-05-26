@@ -3,16 +3,21 @@ import 'package:get/get.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/orderDetailsData.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/crud.dart';
 
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/productsData.dart';
+import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
+
 class OrdersDetailsController extends GetxController {
   var order = Rxn<OrderModel>();
 
   late OrderDetailsData orderDetailsData;
+  late ProductsData productsData;
 
   @override
   void onInit() {
     super.onInit();
     print('OrdersDetailsController: onInit called');
     orderDetailsData = OrderDetailsData(Crud());
+    productsData = ProductsData(Crud());
 
     // Fetch order details if id is passed as argument
     var id = Get.arguments;
@@ -37,6 +42,18 @@ class OrdersDetailsController extends GetxController {
       order.value = data;
     } else {
       print('OrdersDetailsController: fetchOrderDetails received null data for id: $id');
+    }
+  }
+
+  Future<void> goToProductDetails(int productId) async {
+    print('OrdersDetailsController: goToProductDetails called with productId: $productId');
+    ProductModel? product = await productsData.getProductDetails(productId);
+    if (product != null) {
+      print('OrdersDetailsController: Navigating to productdetails with productId: $productId');
+      Get.toNamed('productdetails', arguments: {'productModel': product});
+    } else {
+      print('OrdersDetailsController: Product not found for productId: $productId');
+      Get.snackbar('Erreur', 'Produit non trouvé');
     }
   }
 }
