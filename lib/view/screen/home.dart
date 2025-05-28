@@ -30,14 +30,18 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildRevenueTrends(Map<String, Map<String, double>> trends) {
+    List<MapEntry<String, double>> sortedQuotidien = trends['quotidien']!.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
+    List<MapEntry<String, double>> sortedMensuel = trends['mensuel']!.entries.toList()
+      ..sort((a, b) => b.key.compareTo(a.key));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text("Quotidien", style: TextStyle(fontWeight: FontWeight.bold)),
-        ...trends['quotidien']!.entries.map((e) => Text("${e.key}: ${e.value.toStringAsFixed(2)} €")),
+        ...sortedQuotidien.map((e) => Text("${e.key}: ${e.value.toStringAsFixed(2)} €")),
         const SizedBox(height: 8),
         const Text("Mensuel", style: TextStyle(fontWeight: FontWeight.bold)),
-        ...trends['mensuel']!.entries.map((e) => Text("${e.key}: ${e.value.toStringAsFixed(2)} €")),
+        ...sortedMensuel.map((e) => Text("${e.key}: ${e.value.toStringAsFixed(2)} €")),
       ],
     );
   }
@@ -130,7 +134,8 @@ class HomePage extends StatelessWidget {
                           "Acquisition Clients",
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: stats.acquisitionClients.entries
+                            children: (stats.acquisitionClients.entries.toList()
+                                ..sort((a, b) => b.key.compareTo(a.key)))
                                 .map((e) => Text("${e.key}: ${e.value}"))
                                 .toList(),
                           ),
