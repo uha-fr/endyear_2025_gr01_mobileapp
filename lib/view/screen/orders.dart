@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/auth/login_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/controller/orders_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/controller/clients_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
@@ -20,6 +21,27 @@ class CommandesPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: AppColor.primaryColor,
         foregroundColor: Colors.white,
+        actions: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppColor.primaryColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            width: 60,
+            padding: const EdgeInsets.symmetric(vertical: 8),
+              child: IconButton(
+                onPressed: () {
+                  final loginController = Get.find<LoginControllerImp>();
+                  loginController.logout();
+                },
+                icon: const Icon(
+                  Icons.exit_to_app_outlined,
+                  size: 30,
+                  color: Colors.grey,
+                ),
+              ),
+          ),
+        ],
       ),
       body: Column(
         children: [

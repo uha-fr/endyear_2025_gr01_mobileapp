@@ -1,6 +1,7 @@
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controller/auth/login_controller.dart';
 import '../../controller/home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -67,10 +68,30 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.primaryColor,
-        title: const Text(""),
+      appBar:  AppBar(
+        title: const Text('Acceuil'),
         centerTitle: true,
+        backgroundColor: AppColor.primaryColor,
+        foregroundColor: Colors.white,
+        actions: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppColor.primaryColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            width: 60,
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: IconButton(
+              onPressed:(){  final loginController = Get.find<LoginControllerImp>();
+              loginController.logout();},
+              icon: const Icon(
+                Icons.exit_to_app_outlined,
+                size: 30,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Obx(() {
         final stats = statisticsController.statistics.value;

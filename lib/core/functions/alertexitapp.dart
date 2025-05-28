@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 
 Future<bool> alertExitApp() {
   Get.defaultDialog(
-      title: "49".tr,
-      middleText:"50".tr,
+      title: "Quiter l'Application ".tr,
+      middleText:"Est vous sur de quiter l'application".tr,
       titleStyle: const TextStyle(
           color: AppColor.primaryColor, fontWeight: FontWeight.bold),
       actions: [
@@ -17,7 +17,7 @@ Future<bool> alertExitApp() {
             onPressed: () {
               exit(0);
             },
-            child:  Text("51".tr)),
+            child:  Text("Oui".tr)),
         ElevatedButton(
             style: ButtonStyle(
                 backgroundColor:
@@ -25,7 +25,7 @@ Future<bool> alertExitApp() {
             onPressed: () {
               Get.back();
             },
-            child:  Text("52".tr))
+            child:  Text("Non".tr))
       ]);
   return Future.value(true);
 }

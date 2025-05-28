@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/auth/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/clientdetails_controller.dart';
@@ -38,13 +39,59 @@ class ClientDetailsPage extends StatelessWidget {
 
       if (client == null) {
         return Scaffold(
-          appBar: AppBar(title: Text('Détails du client')),
+          appBar: AppBar(
+            title: Text('Détails du client'),
+            actions: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                width: 60,
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: IconButton(
+                  onPressed: () {
+                    final loginController = Get.find<LoginControllerImp>();
+                    loginController.logout();
+                  },
+                  icon: const Icon(
+                    Icons.exit_to_app_outlined,
+                    size: 30,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ],
+          ),
           body: Center(child: Text('Aucun client sélectionné')),
         );
       }
 
       return Scaffold(
-        appBar: AppBar(title: Text('Détails du client')),
+        appBar: AppBar(
+          title: Text('Détails du client'),
+          actions: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              width: 60,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+                child: IconButton(
+                  onPressed: () {
+                    final loginController = Get.find<LoginControllerImp>();
+                    loginController.logout();
+                  },
+                  icon: const Icon(
+                    Icons.exit_to_app_outlined,
+                    size: 30,
+                    color: Colors.grey,
+                  ),
+                ),
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ListView(

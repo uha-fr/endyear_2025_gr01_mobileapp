@@ -1,9 +1,15 @@
+import 'package:endyear_2025_gr01_mobileapp/core/class/crud.dart';
+import 'package:endyear_2025_gr01_mobileapp/linkapi.dart';
 
 class LoginData {
-
-  LoginData();
+   Crud crud;
+  LoginData(this.crud);
 
   postdata(String email, String password) async {
-
+       var response = await crud.postData(LinkApi.auth, {
+      "email": email,
+      "password": password,
+    });
+    return response.fold((l) => l, (r) => r);
   }
 }
