@@ -51,6 +51,7 @@ class OrderModel {
   final int id;
   final String reference;
   final int idCustomer;
+  final int currentStateId;
   final String customerName;
   final String currentStateName;
   final String payment;
@@ -71,6 +72,7 @@ class OrderModel {
     required this.reference,
     required this.idCustomer,
     required this.customerName,
+    required this.currentStateId,
     required this.currentStateName,
     required this.payment,
     required this.module,
@@ -95,6 +97,7 @@ class OrderModel {
       reference: json['reference'] ?? '',
       idCustomer: json['idCustomer'] ?? 0,
       customerName: json['customerName'] ?? '',
+      currentStateId: json['current_state'] ?? '',
       currentStateName: json['currentStateName'] ?? '',
       payment: json['payment'] ?? '',
       module: json['module'] ?? '',

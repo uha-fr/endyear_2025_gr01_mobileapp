@@ -21,4 +21,11 @@ class OrderDetailsData {
       }
     });
   }
+
+  Future<bool> updateOrderStatus(int orderId, int newStateId) async {
+    print('OrderDetailsData: updateOrderStatus called with orderId: $orderId, newStateId: $newStateId');
+    var response = await crud.postData('${LinkApi.orders}/$orderId', {'newStateId': newStateId});
+    print('OrderDetailsData: updateOrderStatus response: $response');
+    return response.fold((l) => false, (r) => r['success'] == true);
+  }
 }

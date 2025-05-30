@@ -56,4 +56,16 @@ class OrdersDetailsController extends GetxController {
       Get.snackbar('Erreur', 'Produit non trouvé');
     }
   }
+
+  Future<bool> updateOrderStatus(int orderId, int newStateId) async {
+    print('OrdersDetailsController: updateOrderStatus called with orderId: $orderId, newStateId: $newStateId');
+    bool success = await orderDetailsData.updateOrderStatus(orderId, newStateId);
+    if (success) {
+      print('OrdersDetailsController: updateOrderStatus success, refreshing order details');
+      await fetchOrderDetails(orderId);
+    } else {
+      print('OrdersDetailsController: updateOrderStatus failed');
+    }
+    return success;
+  }
 }
