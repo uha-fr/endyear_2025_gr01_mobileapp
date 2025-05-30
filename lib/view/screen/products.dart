@@ -117,8 +117,10 @@ class ProductsPage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: controller.filteredData.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, childAspectRatio: 0.7),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: (MediaQuery.of(context).size.width ~/ 200).clamp(1, 6),
+                      childAspectRatio: 0.7,
+                    ),
                     itemBuilder: (BuildContext context, index) {
                       return CustomListproduct(productModel: controller.filteredData[index]);
                     },
