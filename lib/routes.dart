@@ -1,6 +1,8 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/configbackendcontroller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/middleware/mymiddleware.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/screen/auth/login.dart';
+import 'package:endyear_2025_gr01_mobileapp/view/screen/config.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/screen/order_details.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/screen/home.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/screen/homescreen.dart';
@@ -15,7 +17,7 @@ List<GetPage<dynamic>>? routes = [
   
   // Application par defaut commence de la page HomeScreen
   GetPage(
-      name: "/", page: () => const HomeScreen(), middlewares: [MyMiddleWare()]),
+      name: "/", page: () =>  Config(), middlewares: [MyMiddleWare()]),
   
   //Auth
   GetPage(name: AppRoutes.login, page: () => const Login()),

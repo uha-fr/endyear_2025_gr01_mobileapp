@@ -15,7 +15,7 @@ class ClientDetailsData {
 
   Future<ClientDetailsResponse?> getData(int id) async {
     var response = await crud.getData(
-      '${LinkApi.server}/customerDetails.php?id=$id',
+'${LinkApi.instance.server}/customerDetails.php?id=$id',
     );
     return response.fold(
       (l) {

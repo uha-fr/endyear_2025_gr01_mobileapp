@@ -9,7 +9,7 @@ class ProductsData {
   ProductsData(this.crud);
 
   Future<List> getData() async {
-    var response = await crud.getData(LinkApi.products);
+var response = await crud.getData(LinkApi.instance.products);
     return response.fold((l) => [], (r) {
       if (r['success'] == true) {
         // Directly extract 'products' list from the decoded response map
@@ -21,7 +21,7 @@ class ProductsData {
   }
 
   Future<ProductModel?> getProductDetails(int id) async {
-    var response = await crud.getData('${LinkApi.productDetails}?id=$id');
+var response = await crud.getData('${LinkApi.instance.productDetails}?id=$id');
     return response.fold((l) => null, (r) {
       if (r['success'] == true) {
         var product = r['product'] ?? r['order'] ?? r;

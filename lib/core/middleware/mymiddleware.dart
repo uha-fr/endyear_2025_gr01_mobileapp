@@ -11,13 +11,18 @@ class MyMiddleWare extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
 
-   //if l utilisateur est deja connecté -> vers pageHome
+    // if user is already authenticated -> go to homePage
     if (myServices.sharedPreferences.getString("step") == "2") {
       return const RouteSettings(name: AppRoutes.homePage);
     }
 
-     else {
+    // if back office URL is set -> go to login page
+    String? serverUrl = myServices.sharedPreferences.getString('server_url');
+    if (serverUrl != null && serverUrl.isNotEmpty) {
       return const RouteSettings(name: AppRoutes.login);
     }
+
+    // else go to config page to enter back office URL
+    return const RouteSettings(name: AppRoutes.configPage);
   }
 }

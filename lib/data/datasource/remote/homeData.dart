@@ -7,7 +7,7 @@ class StatisticsData {
   StatisticsData(this.crud);
 
   Future<StatisticsModel?> getData() async {
-    var response = await crud.getData(LinkApi.statistics);
+var response = await crud.getData(LinkApi.instance.statistics);
     return response.fold((l) {
       return null;
     }, (r) {

@@ -1,22 +1,34 @@
+import 'package:get/get.dart';
+import '../controller/configbackendcontroller.dart';
+
 class LinkApi {
-  static const String server = "http://localhost/xampp/endyear_2025_gr01_back";
+  static final LinkApi _instance = LinkApi._internal();
 
-  // Auth
-  static const String auth = "$server/auth.php";
+  factory LinkApi() {
+    return _instance;
+  }
 
-  // products
-  static const String products = "$server/products.php";
-  static const String productDetails = "$server/produitDetails.php";
+  LinkApi._internal();
 
-  //orders
-  static const String orders = "$server/orders.php";
+  final ConfigBackendController _configController = Get.find();
 
-  // order details
-  static const String orderDetails = "$server/orderDetails.php";
+  String get server => _configController.serverUrl.value;
 
-  static const String clients = "$server/customers.php";
+  String get auth => "$server/auth.php";
 
-  static const String clientDetails = "$server/customerDetails.php";
+  String get products => "$server/products.php";
 
-  static const String statistics = "$server/statistics.php";
+  String get productDetails => "$server/produitDetails.php";
+
+  String get orders => "$server/orders.php";
+
+  String get orderDetails => "$server/orderDetails.php";
+
+  String get clients => "$server/customers.php";
+
+  String get clientDetails => "$server/customerDetails.php";
+
+  String get statistics => "$server/statistics.php";
+
+  static LinkApi get instance => _instance;
 }

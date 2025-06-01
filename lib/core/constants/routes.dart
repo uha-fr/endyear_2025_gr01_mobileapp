@@ -6,4 +6,8 @@ class AppRoutes {
 
   //Product
   static const String productdetails = "/productdetails";
+
+  static const String configPage = "/configpage";
+
+
 }

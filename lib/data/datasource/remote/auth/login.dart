@@ -6,7 +6,7 @@ class LoginData {
   LoginData(this.crud);
 
   postdata(String email, String password) async {
-       var response = await crud.postData(LinkApi.auth, {
+var response = await crud.postData(LinkApi.instance.auth, {
       "email": email,
       "password": password,
     });
