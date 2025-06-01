@@ -78,17 +78,17 @@ class ClientDetailsPage extends StatelessWidget {
               ),
               width: 60,
               padding: const EdgeInsets.symmetric(vertical: 8),
-                child: IconButton(
-                  onPressed: () {
-                    final loginController = Get.find<LoginControllerImp>();
-                    loginController.logout();
-                  },
-                  icon: const Icon(
-                    Icons.exit_to_app_outlined,
-                    size: 30,
-                    color: Colors.grey,
-                  ),
+              child: IconButton(
+                onPressed: () {
+                  final loginController = Get.find<LoginControllerImp>();
+                  loginController.logout();
+                },
+                icon: const Icon(
+                  Icons.exit_to_app_outlined,
+                  size: 30,
+                  color: Colors.grey,
                 ),
+              ),
             ),
           ],
         ),
@@ -118,6 +118,36 @@ class ClientDetailsPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
+                'Adresses:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              if (client.addresses == null || client.addresses!.isEmpty)
+                Text('Aucune adresse disponible.'),
+              if (client.addresses != null && client.addresses!.isNotEmpty)
+                Column(
+                  children:
+                      client.addresses!.map((address) {
+                        return Card(
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${address.address1}${address.address2 != null && address.address2!.isNotEmpty ? ', ' + address.address2! : ''}',
+                                ),
+                                Text('${address.postcode} ${address.city}'),
+                                Text('${address.country}'),
+                                Text('Téléphone: ${address.phone}'),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                ),
+              SizedBox(height: 16),
+              Text(
                 'Historique des commandes:',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -132,10 +162,7 @@ class ClientDetailsPage extends StatelessWidget {
                           title: Text('Commande ID: $orderId'),
                           trailing: Icon(Icons.arrow_forward_ios),
                           onTap: () {
-                            Get.toNamed(
-                              '/orderdetails',
-                              arguments: orderId,
-                            );
+                            Get.toNamed('/orderdetails', arguments: orderId);
                           },
                         );
                       }).toList(),

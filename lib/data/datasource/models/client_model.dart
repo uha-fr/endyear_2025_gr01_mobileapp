@@ -1,3 +1,46 @@
+class Address {
+  final int id;
+  final String address1;
+  final String? address2;
+  final String postcode;
+  final String city;
+  final String country;
+  final String phone;
+
+  Address({
+    required this.id,
+    required this.address1,
+    this.address2,
+    required this.postcode,
+    required this.city,
+    required this.country,
+    required this.phone,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+      id: json['id'],
+      address1: json['address1'] ?? '',
+      address2: json['address2'],
+      postcode: json['postcode'] ?? '',
+      city: json['city'] ?? '',
+      country: json['country'] ?? '',
+      phone: json['phone'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'address1': address1,
+      'address2': address2,
+      'postcode': postcode,
+      'city': city,
+      'country': country,
+      'phone': phone,
+    };
+  }
+}
 
 class Customer {
   final int id;
@@ -10,6 +53,7 @@ class Customer {
   final String dateAdd;
   final String? dateUpd;
   final List<int>? orderIds;
+  final List<Address>? addresses;
 
   Customer({
     required this.id,
@@ -22,6 +66,7 @@ class Customer {
     required this.dateAdd,
     this.dateUpd,
     this.orderIds,
+    this.addresses,
   });
 
   /// Factory constructor from JSON
@@ -42,6 +87,12 @@ class Customer {
                   .map((e) => e as int)
                   .toList()
               : null,
+      addresses:
+          json['addresses'] != null
+              ? (json['addresses'] as List<dynamic>)
+                  .map((e) => Address.fromJson(e))
+                  .toList()
+              : null,
     );
   }
 
@@ -58,6 +109,7 @@ class Customer {
       'date_add': dateAdd,
       'date_upd': dateUpd,
       'order_ids': orderIds,
+      'addresses': addresses?.map((e) => e.toJson()).toList(),
     };
   }
 }
