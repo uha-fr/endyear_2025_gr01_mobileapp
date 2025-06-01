@@ -18,9 +18,7 @@ class ClientsController extends GetxController {
   }
 
   void fetchClients() async {
-    print('ClientsController: Fetching clients...');
     var data = await clientsData.getData();
-    print('ClientsController: Fetched clients count: ${data.length}');
     clients.assignAll(data);
   }
 }

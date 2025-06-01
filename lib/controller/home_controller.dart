@@ -15,10 +15,8 @@ class StatisticsController extends GetxController {
   }
 
   void fetchStatistics() async {
-    print("StatisticsController: Fetching statistics from API");
     var data = await statisticsData.getData();
     if (data != null) {
-      print("StatisticsController: Statistics fetched successfully");
       statistics.value = data;
     } else {
       print("StatisticsController: Failed to fetch statistics");

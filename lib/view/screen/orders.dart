@@ -14,7 +14,6 @@ class CommandesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Orders Screen: Building orders list UI");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Commandes'),
@@ -52,9 +51,7 @@ class CommandesPage extends StatelessWidget {
               children: [
                 // Filtrer par état
                 Obx(() {
-                  print(
-                    "Orders Screen: Selected filter state: ${orderController.selectedState.value}",
-                  );
+  
                   return DropdownButton<int>(
                     isDense: true,
                     value: orderController.selectedState.value,
@@ -105,7 +102,6 @@ class CommandesPage extends StatelessWidget {
                     ],
                     onChanged: (value) {
                       if (value != null) {
-                        print("Orders Screen: Filter state changed to $value");
                         orderController.updateFilterState(value);
                       }
                     },
@@ -113,9 +109,7 @@ class CommandesPage extends StatelessWidget {
                 }),
                 // Trier par date
                 Obx(() {
-                  print(
-                    "Orders Screen: Selected sort order: ${orderController.sortAscending.value}",
-                  );
+
                   return DropdownButton<bool>(
                     isDense: true,
                     value: orderController.sortAscending.value,
@@ -125,9 +119,7 @@ class CommandesPage extends StatelessWidget {
                     ],
                     onChanged: (value) {
                       if (value != null) {
-                        print(
-                          "Orders Screen: Sort order changed to ${value ? 'ascending' : 'descending'}",
-                        );
+
                         orderController.updateSortOrder(value);
                       }
                     },
@@ -139,15 +131,11 @@ class CommandesPage extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (orderController.orders.isEmpty) {
-                print(
-                  "Orders Screen: Orders list is empty, showing loading indicator",
-                );
+
                 return const Center(child: CircularProgressIndicator());
               }
               final filteredOrders = orderController.filteredSortedOrders;
-              print(
-                "Orders Screen: Number of orders to display: ${filteredOrders.length}",
-              );
+
               if (filteredOrders.isEmpty) {
                 return const Center(child: Text('No orders found.'));
               }
@@ -163,12 +151,9 @@ class CommandesPage extends StatelessWidget {
                           ? '${client.firstname} ${client.lastname}'
                           : order
                               .customerName; // fallback to order.customerName
-                  print(
-                    "Orders Screen: Displaying order ${order.reference} for client $clientName",
-                  );
+
                   return GestureDetector(
                     onTap: () {
-                      print("Orders Screen: Order ${order.reference} tapped");
                       Get.toNamed('/orderdetails', arguments: order.id);
                     },
                     child: CustomOrderCard(

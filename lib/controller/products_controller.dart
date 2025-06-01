@@ -105,7 +105,6 @@ getproduct() async {
   statusRequest = StatusRequest.loading;
   update();
   var response = await productsData.getData();
-  print('Fetched product data: $response'); // Debug
   if (response.isNotEmpty) {
     data = response.map((e) => ProductModel.fromJson(e)).toList();
 

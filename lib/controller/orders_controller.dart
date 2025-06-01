@@ -20,24 +20,19 @@ class OrderController extends GetxController {
   }
 
   void fetchOrders() async {
-    print("OrderController: Fetching orders from API");
     var data = await ordersData.getData();
-    print("OrderController: Number of orders fetched: ${data.length}");
     orders.assignAll(data);
   }
 
   void updateFilterState(int state) {
-    print("OrderController: Updating filter state to $state");
     selectedState.value = state;
   }
 
   void updateSortOrder(bool ascending) {
-    print("OrderController: Updating sort order to ${ascending ? 'ascending' : 'descending'}");
     sortAscending.value = ascending;
   }
 
   List<OrderModel> get filteredSortedOrders {
-    print("OrderController: Filtering and sorting orders");
     List<OrderModel> filtered =
         selectedState.value == 0
             ? orders
@@ -53,7 +48,6 @@ class OrderController extends GetxController {
           : dateB.compareTo(dateA);
     });
 
-    print("OrderController: Number of orders after filtering: ${filtered.length}");
     return filtered;
   }
 
