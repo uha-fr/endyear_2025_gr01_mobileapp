@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/auth/login_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/controller/products_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/handlingdataview.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
@@ -29,9 +30,10 @@ class ProductsPage extends StatelessWidget {
       width: 60,
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: IconButton(
-        onPressed: null,
+        onPressed:(){  final loginController = Get.find<LoginControllerImp>();
+                  loginController.logout();},
         icon: const Icon(
-          Icons.notifications_active_outlined,
+          Icons.exit_to_app_outlined,
           size: 30,
           color: Colors.grey,
         ),
@@ -115,8 +117,10 @@ class ProductsPage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: controller.filteredData.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, childAspectRatio: 0.7),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: (MediaQuery.of(context).size.width ~/ 200).clamp(1, 6),
+                      childAspectRatio: 0.7,
+                    ),
                     itemBuilder: (BuildContext context, index) {
                       return CustomListproduct(productModel: controller.filteredData[index]);
                     },

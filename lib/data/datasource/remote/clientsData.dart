@@ -7,9 +7,7 @@ class ClientsData {
   ClientsData(this.crud);
 
   Future<List<Customer>> getData() async {
-    print('ClientsData: Fetching data from API...');
     var response = await crud.getData(LinkApi.clients);
-    print('ClientsData: Raw response: $response');
     return response.fold((l) {
       return [];
     }, (r) {

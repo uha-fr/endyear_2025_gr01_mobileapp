@@ -41,15 +41,17 @@ bool isBase64(String str) {
                        Hero(
                         tag: "${productModel.productId}",
                         child: isBase64(productModel.productImage ?? '')
-                            ? Image.memory(
+                      ? Image.memory(
                                 base64Decode(productModel.productImage ?? ''),
-                                height: 100,
-                                fit: BoxFit.fill,
+                                width: double.infinity,
+                                height: 150,
+                                fit: BoxFit.cover,
                               )
                             : Image.network(
                                 productModel.productImage ?? '',
-                                height: 100,
-                                fit: BoxFit.fill,
+                                width: double.infinity,
+                                height: 150,
+                                fit: BoxFit.cover,
                               ),
                       ),
                       const SizedBox(height: 10),
@@ -95,7 +97,8 @@ bool isBase64(String str) {
                         ],
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        margin: const EdgeInsets.only(bottom: 4),
                         decoration: BoxDecoration(
                           color: (productModel.productCount ?? 0) > 0
                               ? Colors.green
@@ -108,7 +111,7 @@ bool isBase64(String str) {
                               : "Rupture de stock 0",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

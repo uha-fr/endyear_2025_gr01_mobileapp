@@ -1,6 +1,9 @@
 class LinkApi {
   static const String server = "http://localhost/xampp/endyear_2025_gr01_back";
 
+  // Auth
+  static const String auth = "$server/auth.php";
+
   // products
   static const String products = "$server/products.php";
   static const String productDetails = "$server/produitDetails.php";

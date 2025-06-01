@@ -1,3 +1,4 @@
+import 'package:endyear_2025_gr01_mobileapp/controller/auth/login_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,56 +21,43 @@ class ClientsPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: AppColor.primaryColor,
         foregroundColor: Colors.white,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Obx(() {
-              return DropdownButton<String>(
-                value: controller.sortOption.value,
-                onChanged: (value) {
-                  if (value != null) {
-                    controller.sortOption.value = value;
-                  }
+        actions: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppColor.primaryColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            width: 60,
+            padding: const EdgeInsets.symmetric(vertical: 8),
+              child: IconButton(
+                onPressed: () {
+                  final loginController = Get.find<LoginControllerImp>();
+                  loginController.logout();
                 },
-                items: [
-                  DropdownMenuItem(
-                    value: 'lastOrderDate',
-                    child: Text('Date de dernière commande'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'name',
-                    child: Text('Nom (alphabets)'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'creation',
-                    child: Text('Par ordre de création'),
-                  ),
-                ],
-              );
-            }),
-          ),
-          Expanded(
-            child: Obx(() {
-              print('ClientsPage: clientsList length: ${controller.clientsList.length}');
-              return ListView.builder(
-                itemCount: controller.clientsList.length,
-                itemBuilder: (context, index) {
-                  final client = controller.clientsList[index];
-                  return CustomClientCard(
-                    client: client,
-                    onTap: () {
-                      detailsController.setClient(client);
-                      Get.to(() => ClientDetailsPage());
-                    },
-                  );
-                },
-              );
-            }),
+                icon: const Icon(
+                  Icons.exit_to_app_outlined,
+                  size: 30,
+                  color: Colors.grey,
+                ),
+              ),
           ),
         ],
       ),
+      body: Obx(() {
+        return ListView.builder(
+          itemCount: controller.clientsList.length,
+          itemBuilder: (context, index) {
+            final client = controller.clientsList[index];
+            return CustomClientCard(
+              client: client,
+              onTap: () {
+                detailsController.setClient(client);
+                Get.to(() => ClientDetailsPage());
+              },
+            );
+          },
+        );
+      }),
     );
   }
 }

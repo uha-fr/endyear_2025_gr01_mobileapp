@@ -81,6 +81,34 @@ class OrderDetailsScreen extends StatelessWidget {
                 Text('Client: ${order.customerName}'),
                 Text('Date: ${formatDate(order.dateAdd)}'),
                 Text('Statut: ${order.currentStateName}'),
+                DropdownButton<int>(
+                  value: order.currentStateId,
+                  items: const [
+                    DropdownMenuItem(value: 1, child: Text('En attente du paiement par chèque')),
+                    DropdownMenuItem(value: 2, child: Text('Paiement accepté')),
+                    DropdownMenuItem(value: 3, child: Text('En cours de préparation')),
+                    DropdownMenuItem(value: 4, child: Text('Expédié')),
+                    DropdownMenuItem(value: 5, child: Text('Livré')),
+                    DropdownMenuItem(value: 6, child: Text('Annulé')),
+                    DropdownMenuItem(value: 7, child: Text('Remboursé')),
+                    DropdownMenuItem(value: 8, child: Text('Erreur de paiement')),
+                    DropdownMenuItem(value: 9, child: Text('En attente de réapprovisionnement (payé)')),
+                    DropdownMenuItem(value: 10, child: Text('En attente de virement bancaire')),
+                    DropdownMenuItem(value: 11, child: Text('Paiement à distance accepté')),
+                    DropdownMenuItem(value: 12, child: Text('En attente de réapprovisionnement (non payé)')),
+                    DropdownMenuItem(value: 13, child: Text('En attente de paiement à la livraison')),
+                  ],
+                  onChanged: (newValue) async {
+                    if (newValue != null) {
+                      bool success = await controller.updateOrderStatus(order.id!, newValue);
+                      if (success) {
+                        Get.snackbar('Succès', 'Statut mis à jour avec succès');
+                      } else {
+                        Get.snackbar('Erreur', 'Échec de la mise à jour du statut');
+                      }
+                    }
+                  },
+                ),
                 Text('Paiement: $paymentMethod'),
                 Text('Total: ${order.totalPaidTaxIncl.toStringAsFixed(2)}€'),
 
