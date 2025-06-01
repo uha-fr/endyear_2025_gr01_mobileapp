@@ -48,7 +48,7 @@ Cette application utilise les technologies et dépendances suivantes :
 
 1. Clonez ce dépôt :
    ```bash
-   git clone <url-du-depot>
+   git clone https://github.com/uha-fr/endyear_2025_gr01_mobileapp.git
    ```
 2. Accédez au répertoire du projet :
    ```bash
@@ -71,11 +71,3 @@ flutter run
 - L'application démarre sur l'écran de connexion.
 - Après authentification, vous accédez à l'écran principal avec accès aux clients, commandes, produits et tâches.
 - Naviguez via le menu pour gérer les différentes entités.
-
-## Contribution
-
-Les contributions sont les bienvenues. Veuillez ouvrir une issue ou soumettre une pull request pour proposer des améliorations ou corriger des bugs.
-
-## Support
-
-Pour toute question ou problème, veuillez contacter l'équipe de développement ou ouvrir une issue sur le dépôt.
