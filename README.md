@@ -4,8 +4,8 @@ GestionMagasin est une application Flutter de gestion de magasin conçue pour ai
 
 ## Fonctionnalités principales
 
-- Gestion des clients : ajout, modification, suppression et consultation des informations clients.
-- Gestion des commandes : création, suivi et gestion des commandes.
+- Gestion des clients : consultation des informations clients.
+- Gestion des commandes : suivi et gestion des commandes.
 - Gestion des produits : gestion du catalogue de produits avec détails et images.
 - Gestion des tâches : organisation et suivi des tâches liées à la gestion du magasin.
 
@@ -43,6 +43,31 @@ Cette application utilise les technologies et dépendances suivantes :
 - Avoir installé le [Flutter SDK](https://flutter.dev/docs/get-started/install).
 - Avoir un éditeur compatible Flutter (ex: VSCode, Android Studio).
 - Un appareil ou émulateur Android/iOS pour exécuter l'application.
+
+### Détail de l'installation de Flutter SDK
+
+1. Téléchargez le SDK Flutter depuis le site officiel : [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
+
+2. Extrayez le fichier compressé dans un répertoire de votre choix (par exemple `C:\src\flutter` sur Windows ou `~/flutter` sur macOS/Linux).
+
+3. Ajoutez le chemin du dossier `flutter/bin` à la variable d'environnement PATH :
+   - Sur Windows :
+     - Ouvrez les Paramètres système avancés > Variables d'environnement.
+     - Modifiez la variable PATH et ajoutez le chemin complet vers `flutter\bin`.
+   - Sur macOS/Linux :
+     - Ajoutez la ligne suivante à votre fichier `~/.bashrc`, `~/.zshrc` ou équivalent :
+       ```bash
+       export PATH="$PATH:[chemin_vers_flutter]/flutter/bin"
+       ```
+     - Rechargez le profil avec `source ~/.bashrc` ou `source ~/.zshrc`.
+
+4. Vérifiez l'installation en ouvrant un terminal et en exécutant :
+   ```bash
+   flutter doctor
+   ```
+   Cette commande vérifie l'installation et affiche les dépendances manquantes.
+
+5. Suivez les instructions affichées par `flutter doctor` pour installer les dépendances spécifiques à votre plateforme (Android SDK, Xcode, etc.).
 
 ## Installation
 
