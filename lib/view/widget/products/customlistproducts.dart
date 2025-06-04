@@ -16,7 +16,11 @@ class CustomListproduct extends GetView<ProductControllerImp> {
 
 bool isBase64(String str) {
     try {
-      final decoded = base64Decode(str);
+      String base64Str = str;
+      if (str.startsWith('data:image')) {
+        base64Str = str.substring(str.indexOf(',') + 1);
+      }
+      final decoded = base64Decode(base64Str);
       return decoded.isNotEmpty;
     } catch (e) {
       return false;
@@ -34,15 +38,23 @@ bool isBase64(String str) {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                child: SizedBox(
+                  height: 300,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                        Hero(
                         tag: "${productModel.productId}",
                         child: isBase64(productModel.productImage ?? '')
                       ? Image.memory(
-                                base64Decode(productModel.productImage ?? ''),
+                                base64Decode(
+                                  (productModel.productImage ?? '').startsWith('data:image')
+                                  ? (productModel.productImage ?? '').substring((productModel.productImage ?? '').indexOf(',') + 1)
+                                  : (productModel.productImage ?? '')
+                                ),
                                 width: double.infinity,
                                 height: 150,
                                 fit: BoxFit.cover,
@@ -118,6 +130,8 @@ bool isBase64(String str) {
                       ),
 
                     ]),
+                  ),
+                ),
               ),
 
             ],
