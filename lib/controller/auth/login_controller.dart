@@ -26,18 +26,25 @@ class LoginControllerImp extends LoginController {
 
   MyServices myServices = Get.find(); // pour utiliser SharedPreference
   
-  void logout() async {
-    print("Logout started");
-    await myServices.sharedPreferences.clear();
-    print("SharedPreferences cleared");
-    // Add any other cache or session clearing here if needed
-    Get.offNamed(AppRoutes.login);
-    print("Navigated to login screen");
-  }
+void logout() async {
+  print("Logout started");
+
+  await myServices.sharedPreferences.clear();
+  print("SharedPreferences cleared");
+
+  print("All controllers deleted");
+
+  await initialServices(); // Redémarre les services
+  print("Services re-initialized");
+
+  Get.offAllNamed(AppRoutes.login); // Retour à la page de login
+  print("Navigated to login screen");
+}
+
   
   @override
   login() async {
-        var formdata = formstate.currentState;
+    var formdata = formstate.currentState;
     if (formdata!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
@@ -54,6 +61,10 @@ class LoginControllerImp extends LoginController {
             myServices.sharedPreferences.setString("firstname", employee.firstname);
             myServices.sharedPreferences.setString("lastname", employee.lastname);
             myServices.sharedPreferences.setString("email", employee.email);
+
+            // Clear email and password fields after successful login
+            email.text = '';
+            password.text = '';
 
             // lehna bch k yabda l user c deja connecté w 3awed dkhal lel application direct yhezo lel home page ( middleware) kif fazet l onboarding
             myServices.sharedPreferences.setString("step", "2");

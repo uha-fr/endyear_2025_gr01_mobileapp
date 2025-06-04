@@ -13,7 +13,7 @@ class MyServices extends GetxService {
     print("MyServices logout started");
     await sharedPreferences.clear();
     print("MyServices SharedPreferences cleared");
-    Get.offAllNamed('/login'); // Adjust route name as per your app
+   
   }
 }
 
