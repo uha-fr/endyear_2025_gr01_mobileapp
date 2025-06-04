@@ -38,6 +38,12 @@ class TasksControllerImp extends TasksController {
     getRestockProducts();
   }
 
+  @override
+  void refresh() {
+    fetchOrders();
+    super.refresh();
+  }
+
   void fetchOrders() async {
     var fetchedOrders = await ordersData.getData();
     orders.assignAll(fetchedOrders);
