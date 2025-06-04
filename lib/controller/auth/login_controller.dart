@@ -26,9 +26,13 @@ class LoginControllerImp extends LoginController {
 
   MyServices myServices = Get.find(); // pour utiliser SharedPreference
   
-  void logout() {
-    myServices.sharedPreferences.clear();
+  void logout() async {
+    print("Logout started");
+    await myServices.sharedPreferences.clear();
+    print("SharedPreferences cleared");
+    // Add any other cache or session clearing here if needed
     Get.offNamed(AppRoutes.login);
+    print("Navigated to login screen");
   }
   
   @override
