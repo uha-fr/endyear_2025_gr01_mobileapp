@@ -34,10 +34,14 @@ bool isBase64(String str) {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                child: SizedBox(
+                  height: 300,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                        Hero(
                         tag: "${productModel.productId}",
                         child: isBase64(productModel.productImage ?? '')
@@ -118,6 +122,8 @@ bool isBase64(String str) {
                       ),
 
                     ]),
+                  ),
+                ),
               ),
 
             ],
