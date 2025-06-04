@@ -14,7 +14,11 @@ class ProductDetails extends StatelessWidget {
   
   bool isBase64(String str) {
     try {
-      final decoded = base64Decode(str);
+      String base64Str = str;
+      if (str.startsWith('data:image')) {
+        base64Str = str.substring(str.indexOf(',') + 1);
+      }
+      final decoded = base64Decode(base64Str);
       return decoded.isNotEmpty;
     } catch (e) {
       return false;
@@ -49,7 +53,11 @@ class ProductDetails extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       child: isBase64(controller.productModel.productImage!)
                                           ? Image.memory(
-                                              base64Decode(controller.productModel.productImage!),
+                                              base64Decode(
+                                                controller.productModel.productImage!.startsWith('data:image')
+                                                ? controller.productModel.productImage!.substring(controller.productModel.productImage!.indexOf(',') + 1)
+                                                : controller.productModel.productImage!
+                                              ),
                                               height: 200,
                                               fit: BoxFit.cover,
                                             )
