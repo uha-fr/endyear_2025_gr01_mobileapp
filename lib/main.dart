@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:endyear_2025_gr01_mobileapp/routes.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
   runApp(const MyApp());
 }
