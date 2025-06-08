@@ -15,158 +15,181 @@ class CommandesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Commandes'),
-        centerTitle: true,
-        backgroundColor: AppColor.primaryColor,
-        foregroundColor: Colors.white,
-        actions: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColor.primaryColor,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            width: 60,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-              child: IconButton(
-                onPressed: () {
-                  final loginController = Get.find<LoginControllerImp>();
-                  loginController.logout();
-                },
-                icon: const Icon(
-                  Icons.exit_to_app_outlined,
-                  size: 30,
-                  color: Colors.grey,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 70,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+              title: const Text(
+                'Commandes',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
                 ),
               ),
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColor.primaryColor,
+                      AppColor.primaryColor.withOpacity(0.8),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    final loginController = Get.find<LoginControllerImp>();
+                    loginController.logout();
+                  },
+                  icon: const Icon(
+                    Icons.exit_to_app_outlined,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SliverToBoxAdapter(
+            child: Column(
               children: [
-                // Filtrer par état
-                Obx(() {
-  
-                  return DropdownButton<int>(
-                    isDense: true,
-                    value: orderController.selectedState.value,
-                    items: const [
-                      DropdownMenuItem(value: 0, child: Text('All')),
-                      DropdownMenuItem(
-                        value: 1,
-                        child: Text('En attente du paiement par chèque'),
-                      ),
-                      DropdownMenuItem(
-                        value: 2,
-                        child: Text('Paiement accepté'),
-                      ),
-                      DropdownMenuItem(
-                        value: 3,
-                        child: Text('En cours de préparation'),
-                      ),
-                      DropdownMenuItem(value: 4, child: Text('Expédié')),
-                      DropdownMenuItem(value: 5, child: Text('Livré')),
-                      DropdownMenuItem(value: 6, child: Text('Annulé')),
-                      DropdownMenuItem(value: 7, child: Text('Remboursé')),
-                      DropdownMenuItem(
-                        value: 8,
-                        child: Text('Erreur de paiement'),
-                      ),
-                      DropdownMenuItem(
-                        value: 9,
-                        child: Text('En attente de réapprovisionnement (payé)'),
-                      ),
-                      DropdownMenuItem(
-                        value: 10,
-                        child: Text('En attente de virement bancaire'),
-                      ),
-                      DropdownMenuItem(
-                        value: 11,
-                        child: Text('Paiement à distance accepté'),
-                      ),
-                      DropdownMenuItem(
-                        value: 12,
-                        child: Text(
-                          'En attente de réapprovisionnement (non payé)',
-                        ),
-                      ),
-                      DropdownMenuItem(
-                        value: 13,
-                        child: Text('En attente de paiement à la livraison'),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Filtrer par état
+                      Obx(() {
+                        return DropdownButton<int>(
+                          isDense: true,
+                          value: orderController.selectedState.value,
+                          items: const [
+                            DropdownMenuItem(value: 0, child: Text('All')),
+                            DropdownMenuItem(
+                              value: 1,
+                              child: Text('En attente du paiement par chèque'),
+                            ),
+                            DropdownMenuItem(
+                              value: 2,
+                              child: Text('Paiement accepté'),
+                            ),
+                            DropdownMenuItem(
+                              value: 3,
+                              child: Text('En cours de préparation'),
+                            ),
+                            DropdownMenuItem(value: 4, child: Text('Expédié')),
+                            DropdownMenuItem(value: 5, child: Text('Livré')),
+                            DropdownMenuItem(value: 6, child: Text('Annulé')),
+                            DropdownMenuItem(value: 7, child: Text('Remboursé')),
+                            DropdownMenuItem(
+                              value: 8,
+                              child: Text('Erreur de paiement'),
+                            ),
+                            DropdownMenuItem(
+                              value: 9,
+                              child: Text('En attente de réapprovisionnement (payé)'),
+                            ),
+                            DropdownMenuItem(
+                              value: 10,
+                              child: Text('En attente de virement bancaire'),
+                            ),
+                            DropdownMenuItem(
+                              value: 11,
+                              child: Text('Paiement à distance accepté'),
+                            ),
+                            DropdownMenuItem(
+                              value: 12,
+                              child: Text(
+                                'En attente de réapprovisionnement (non payé)',
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 13,
+                              child: Text('En attente de paiement à la livraison'),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            if (value != null) {
+                              orderController.updateFilterState(value);
+                            }
+                          },
+                        );
+                      }),
+                      // Trier par date
+                      Obx(() {
+                        return DropdownButton<bool>(
+                          isDense: true,
+                          value: orderController.sortAscending.value,
+                          items: const [
+                            DropdownMenuItem(value: true, child: Text('Date Asc')),
+                            DropdownMenuItem(value: false, child: Text('Date Desc')),
+                          ],
+                          onChanged: (value) {
+                            if (value != null) {
+                              orderController.updateSortOrder(value);
+                            }
+                          },
+                        );
+                      }),
                     ],
-                    onChanged: (value) {
-                      if (value != null) {
-                        orderController.updateFilterState(value);
-                      }
-                    },
-                  );
-                }),
-                // Trier par date
-                Obx(() {
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 200, // Ajustez selon vos besoins
+                  child: Obx(() {
+                    if (orderController.orders.isEmpty) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    final filteredOrders = orderController.filteredSortedOrders;
 
-                  return DropdownButton<bool>(
-                    isDense: true,
-                    value: orderController.sortAscending.value,
-                    items: const [
-                      DropdownMenuItem(value: true, child: Text('Date Asc')),
-                      DropdownMenuItem(value: false, child: Text('Date Desc')),
-                    ],
-                    onChanged: (value) {
-                      if (value != null) {
+                    if (filteredOrders.isEmpty) {
+                      return const Center(child: Text('No orders found.'));
+                    }
+                    return ListView.builder(
+                      itemCount: filteredOrders.length,
+                      itemBuilder: (context, index) {
+                        final order = filteredOrders[index];
+                        final client = clientsController.clientsList.firstWhereOrNull(
+                              (c) => c.id == order.idCustomer,
+                        );
+                        final clientName =
+                        client != null
+                            ? '${client.firstname} ${client.lastname}'
+                            : order
+                            .customerName; // fallback to order.customerName
 
-                        orderController.updateSortOrder(value);
-                      }
-                    },
-                  );
-                }),
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed('/orderdetails', arguments: order.id);
+                          },
+                          child: CustomOrderCard(
+                            orderId: order.reference.toString(),
+                            customerName: clientName,
+                            date: order.dateAdd.toString(),
+                            amount: order.totalPaidTaxIncl,
+                            status: order.currentStateName,
+                          ),
+                        );
+                      },
+                    );
+                  }),
+                ),
               ],
             ),
-          ),
-          Expanded(
-            child: Obx(() {
-              if (orderController.orders.isEmpty) {
-
-                return const Center(child: CircularProgressIndicator());
-              }
-              final filteredOrders = orderController.filteredSortedOrders;
-
-              if (filteredOrders.isEmpty) {
-                return const Center(child: Text('No orders found.'));
-              }
-              return ListView.builder(
-                itemCount: filteredOrders.length,
-                itemBuilder: (context, index) {
-                  final order = filteredOrders[index];
-                  final client = clientsController.clientsList.firstWhereOrNull(
-                    (c) => c.id == order.idCustomer,
-                  );
-                  final clientName =
-                      client != null
-                          ? '${client.firstname} ${client.lastname}'
-                          : order
-                              .customerName; // fallback to order.customerName
-
-                  return GestureDetector(
-                    onTap: () {
-                      Get.toNamed('/orderdetails', arguments: order.id);
-                    },
-                    child: CustomOrderCard(
-                      orderId: order.reference.toString(),
-                      customerName: clientName,
-                      date: order.dateAdd.toString(),
-                      amount: order.totalPaidTaxIncl,
-                      status: order.currentStateName,
-                    ),
-                  );
-                },
-              );
-            }),
           ),
         ],
       ),
