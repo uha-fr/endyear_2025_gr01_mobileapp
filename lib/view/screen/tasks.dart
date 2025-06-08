@@ -16,58 +16,76 @@ class TasksPage extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColor.primaryColor,
-          title: const Text(
-            'Tâches à faire',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: true,
-          elevation: 0, // Optionnel : enlève l’ombre
-          actions: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColor.primaryColor,
-                borderRadius: BorderRadius.circular(20),
+        body: CustomScrollView(
+          slivers: [
+            // Top AppBar
+            SliverAppBar(
+              expandedHeight: 70,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                title: const Text(
+                  'Tâches à faire',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                background: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppColor.primaryColor,
+                        AppColor.primaryColor.withOpacity(0.8),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              width: 60,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: IconButton(
-                onPressed: () {
-                  final loginController = Get.find<LoginControllerImp>();
-                  loginController.logout();
-                },
-                icon: const Icon(
-                  Icons.exit_to_app_outlined,
-                  size: 30,
-                  color: Colors.grey,
+              actions: [
+                Container(
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      final loginController = Get.find<LoginControllerImp>();
+                      loginController.logout();
+                    },
+                    icon: const Icon(
+                      Icons.exit_to_app_outlined,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // TabBar
+            SliverToBoxAdapter(
+              child: Container(
+                color: Colors.white,
+                child: const TabBar(
+                  tabs: [
+                    Tab(text: 'Commandes à traiter'),
+                    Tab(text: 'Commandes à expédier'),
+                    Tab(text: 'Réapprovisionnement'),
+                  ],
+                  indicatorColor: AppColor.primaryColor,
+                  labelColor: AppColor.primaryColor,
+                  unselectedLabelColor: Colors.black54,
                 ),
               ),
             ),
-          ],
-        ),
-        body: Column(
-          children: [
-            // TabBar avec fond blanc
-            Container(
-              color: Colors.white,
-              child: const TabBar(
-                tabs: [
-                  Tab(text: 'Commandes à traiter'),
-                  Tab(text: 'Commandes à expédier'),
-                  Tab(text: 'Réapprovisionnement'),
-                ],
-                indicatorColor: AppColor.primaryColor,
-                labelColor: AppColor.primaryColor,
-                unselectedLabelColor: Colors.black54,
-              ),
-            ),
-            // Le contenu selon le tab sélectionné
-            Expanded(
+
+            // TabBarView Content
+            SliverFillRemaining(
               child: TabBarView(
                 children: [
                   GetBuilder<TasksControllerImp>(

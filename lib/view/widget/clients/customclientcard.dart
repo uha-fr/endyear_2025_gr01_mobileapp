@@ -23,7 +23,16 @@ class CustomClientCard extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         leading: CircleAvatar(
-          backgroundImage: AssetImage('assets/images/avatar.png'),
+          backgroundColor: Colors.blueGrey,
+          child: Icon(
+            client.gender == 'Homme'
+                ? Icons.man
+                : client.gender == 'Femme'
+                ? Icons.woman
+                : Icons.person,
+            size: 30,
+            color: Colors.white,
+          ),
         ),
         title: Text('${client.firstname} ${client.lastname}'),
         subtitle: Text('Crée: ${client.dateAdd}'),

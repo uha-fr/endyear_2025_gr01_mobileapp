@@ -16,48 +16,129 @@ class ClientsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Clients'),
-        centerTitle: true,
-        backgroundColor: AppColor.primaryColor,
-        foregroundColor: Colors.white,
-        actions: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppColor.primaryColor,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            width: 60,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-              child: IconButton(
-                onPressed: () {
-                  final loginController = Get.find<LoginControllerImp>();
-                  loginController.logout();
-                },
-                icon: const Icon(
-                  Icons.exit_to_app_outlined,
-                  size: 30,
-                  color: Colors.grey,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 70,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+              title: const Text(
+                'Clients',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
                 ),
               ),
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColor.primaryColor,
+                      AppColor.primaryColor.withOpacity(0.8),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    final loginController = Get.find<LoginControllerImp>();
+                    loginController.logout();
+                  },
+                  icon: const Icon(
+                    Icons.exit_to_app_outlined,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                // 🔍 Barre de recherche
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Rechercher par nom ou prénom...',
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                    onChanged: (value) => controller.searchQuery.value = value,
+                  ),
+                ),
+                // ⬇️ Menu déroulant pour le tri
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Obx(() {
+                    return DropdownButton<String>(
+                      value: controller.sortOption.value,
+                      isExpanded: true,
+                      onChanged: (value) {
+                        if (value != null) {
+                          controller.sortOption.value = value;
+                        }
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'creation',
+                          child: Text('Par ordre de création'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'name',
+                          child: Text('Nom (alphabétique)'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'lastOrderDate',
+                          child: Text('Date de dernière commande'),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          // 📋 Liste des clients
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Obx(() {
+                final clients = controller.clientsList;
+                if (index >= clients.length) {
+                  return const SizedBox.shrink();
+                }
+                final client = clients[index];
+                return CustomClientCard(
+                  client: client,
+                  onTap: () {
+                    detailsController.setClient(client);
+                    Get.to(() => ClientDetailsPage());
+                  },
+                );
+              });
+            }, childCount: controller.clientsList.length),
           ),
         ],
       ),
-      body: Obx(() {
-        return ListView.builder(
-          itemCount: controller.clientsList.length,
-          itemBuilder: (context, index) {
-            final client = controller.clientsList[index];
-            return CustomClientCard(
-              client: client,
-              onTap: () {
-                detailsController.setClient(client);
-                Get.to(() => ClientDetailsPage());
-              },
-            );
-          },
-        );
-      }),
     );
   }
 }
