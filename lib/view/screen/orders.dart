@@ -157,7 +157,7 @@ class CommandesPage extends StatelessWidget {
                     final filteredOrders = orderController.filteredSortedOrders;
 
                     if (filteredOrders.isEmpty) {
-                      return const Center(child: Text('No orders found.'));
+                      return const Center(child: Text('Aucune commande trouvée.'));
                     }
                     return ListView.builder(
                       itemCount: filteredOrders.length,

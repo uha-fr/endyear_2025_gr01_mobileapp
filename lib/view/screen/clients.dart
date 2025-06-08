@@ -100,7 +100,7 @@ class ClientsPage extends StatelessWidget {
                       items: const [
                         DropdownMenuItem(
                           value: 'creation',
-                          child: Text('Par ordre de création'),
+                          child: Text('Ordre de création'),
                         ),
                         DropdownMenuItem(
                           value: 'name',
