@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
-import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/widget/home/custombottomappbarhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

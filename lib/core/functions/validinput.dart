@@ -1,7 +1,5 @@
 import 'package:get/get_utils/get_utils.dart';
 
-import 'package:get/get_utils/get_utils.dart';
-
 validInput(String val, int min, int max, String type) {
   if (val.isEmpty) {
     return "Champ vide".tr;

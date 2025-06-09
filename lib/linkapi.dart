@@ -1,4 +1,6 @@
 class LinkApi {
+  
+  //Base Url
   static const String server = "http://46.226.104.158:8080/endyear_2025_gr01_back";
 
   // Auth
@@ -14,9 +16,10 @@ class LinkApi {
   // order details
   static const String orderDetails = "$server/orderDetails.php";
 
+// Clients
   static const String clients = "$server/customers.php";
-
   static const String clientDetails = "$server/customerDetails.php";
 
+//Statistics
   static const String statistics = "$server/statistics.php";
 }
