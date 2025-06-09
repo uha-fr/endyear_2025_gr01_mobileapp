@@ -69,13 +69,12 @@ class CommandesPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Filtrer par état
                       Obx(() {
                         return DropdownButton<int>(
-                          isDense: true,
+                          isExpanded: false,
                           value: orderController.selectedState.value,
                           items: const [
                             DropdownMenuItem(value: 0, child: Text('All')),
@@ -94,14 +93,19 @@ class CommandesPage extends StatelessWidget {
                             DropdownMenuItem(value: 4, child: Text('Expédié')),
                             DropdownMenuItem(value: 5, child: Text('Livré')),
                             DropdownMenuItem(value: 6, child: Text('Annulé')),
-                            DropdownMenuItem(value: 7, child: Text('Remboursé')),
+                            DropdownMenuItem(
+                              value: 7,
+                              child: Text('Remboursé'),
+                            ),
                             DropdownMenuItem(
                               value: 8,
                               child: Text('Erreur de paiement'),
                             ),
                             DropdownMenuItem(
                               value: 9,
-                              child: Text('En attente de réapprovisionnement (payé)'),
+                              child: Text(
+                                'En attente de réapprovisionnement (payé)',
+                              ),
                             ),
                             DropdownMenuItem(
                               value: 10,
@@ -119,7 +123,9 @@ class CommandesPage extends StatelessWidget {
                             ),
                             DropdownMenuItem(
                               value: 13,
-                              child: Text('En attente de paiement à la livraison'),
+                              child: Text(
+                                'En attente de paiement à la livraison',
+                              ),
                             ),
                           ],
                           onChanged: (value) {
@@ -129,14 +135,20 @@ class CommandesPage extends StatelessWidget {
                           },
                         );
                       }),
-                      // Trier par date
+                      const SizedBox(height: 12),
                       Obx(() {
                         return DropdownButton<bool>(
-                          isDense: true,
+                          isExpanded: false,
                           value: orderController.sortAscending.value,
                           items: const [
-                            DropdownMenuItem(value: true, child: Text('Date Asc')),
-                            DropdownMenuItem(value: false, child: Text('Date Desc')),
+                            DropdownMenuItem(
+                              value: true,
+                              child: Text('Date Asc'),
+                            ),
+                            DropdownMenuItem(
+                              value: false,
+                              child: Text('Date Desc'),
+                            ),
                           ],
                           onChanged: (value) {
                             if (value != null) {
@@ -149,7 +161,9 @@ class CommandesPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height - 200, // Ajustez selon vos besoins
+                  height:
+                      MediaQuery.of(context).size.height -
+                      200, // Ajustez selon vos besoins
                   child: Obx(() {
                     if (orderController.orders.isEmpty) {
                       return const Center(child: CircularProgressIndicator());
@@ -157,20 +171,21 @@ class CommandesPage extends StatelessWidget {
                     final filteredOrders = orderController.filteredSortedOrders;
 
                     if (filteredOrders.isEmpty) {
-                      return const Center(child: Text('Aucune commande trouvée.'));
+                      return const Center(
+                        child: Text('Aucune commande trouvée.'),
+                      );
                     }
                     return ListView.builder(
                       itemCount: filteredOrders.length,
                       itemBuilder: (context, index) {
                         final order = filteredOrders[index];
-                        final client = clientsController.clientsList.firstWhereOrNull(
-                              (c) => c.id == order.idCustomer,
-                        );
+                        final client = clientsController.clientsList
+                            .firstWhereOrNull((c) => c.id == order.idCustomer);
                         final clientName =
-                        client != null
-                            ? '${client.firstname} ${client.lastname}'
-                            : order
-                            .customerName; // fallback to order.customerName
+                            client != null
+                                ? '${client.firstname} ${client.lastname}'
+                                : order
+                                    .customerName; // fallback to order.customerName
 
                         return GestureDetector(
                           onTap: () {

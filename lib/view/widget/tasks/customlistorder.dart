@@ -37,12 +37,13 @@ class CustomListOrder extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(order.customerName,
-                        style: const TextStyle(fontSize: 14)),
+                    Text(
+                      order.customerName,
+                      style: const TextStyle(fontSize: 14),
+                    ),
                     Text(
                       order.dateAdd,
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.grey),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
