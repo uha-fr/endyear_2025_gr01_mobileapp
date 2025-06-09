@@ -1,8 +1,6 @@
-import 'package:dartz/dartz.dart';
 import 'package:endyear_2025_gr01_mobileapp/bindings/initbindings.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/services/services.dart';
 import 'package:endyear_2025_gr01_mobileapp/view/screen/auth/login.dart';
-import 'package:endyear_2025_gr01_mobileapp/view/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get.dart';

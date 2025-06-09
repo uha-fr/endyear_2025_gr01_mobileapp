@@ -1,7 +1,6 @@
 import 'package:endyear_2025_gr01_mobileapp/controller/productdetails_controller.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/handlingdataview.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/constants/color.dart';
-import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';

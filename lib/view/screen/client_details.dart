@@ -1,8 +1,6 @@
-import 'package:endyear_2025_gr01_mobileapp/controller/auth/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/clientdetails_controller.dart';
-import '../../../data/datasource/models/client_model.dart';
 import '../../core/constants/color.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';

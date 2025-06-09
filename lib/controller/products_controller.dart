@@ -1,10 +1,8 @@
 import 'package:endyear_2025_gr01_mobileapp/core/class/statusrequest.dart';
-import 'package:endyear_2025_gr01_mobileapp/core/constants/routes.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/models/productmodel.dart';
 import 'package:endyear_2025_gr01_mobileapp/data/datasource/remote/productsData.dart';
 import 'package:endyear_2025_gr01_mobileapp/core/class/crud.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
  
 abstract class ProductController extends GetxController {
   intialData();
